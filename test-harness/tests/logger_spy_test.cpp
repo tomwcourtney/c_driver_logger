@@ -1,15 +1,12 @@
 #include "CppUTest/TestHarness.h"
-#include "../spies/logger_spy.h"
 
 
 extern "C"
 {
-	/*
-	 * Add your c-only include files here
-	 */
+    #include "../spies/logger_spy.h"
 }
 
-TEST_GROUP(MyCode)
+TEST_GROUP(LoggerSpyTestGroup)
 {
     void setup()
     {
@@ -20,13 +17,18 @@ TEST_GROUP(MyCode)
     }
 };
 
-TEST(MyCode, test1)
+// Spy empty when nothing done.
+TEST(LoggerSpyTestGroup, spy_empty_when_nothing_done)
 {
-    /*
-     * Instantiate your class, or call the function, you want to test.
-     * Then delete this comment
-     */
-    CHECK(true);
+    // Init the logger
+    logger_spy_init();
+
+    // Length of string in spy is 0
+    uint32_t len = strlen(logger_spy_get_string());
+
+    // Check length of string is 0
+    CHECK(len == 0);
+
 }
 
 // 
