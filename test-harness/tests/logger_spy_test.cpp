@@ -69,7 +69,19 @@ TEST(LoggerSpyTestGroup, big_string_overwritten_by_little_string_works_as_expect
     CHECK(strcmp(write_little, read_out) == 0);
 }
 
-// 
+// Check that we cannot overflow the buffer.
+TEST(LoggerSpyTestGroup, test_that_the_spy_string_does_not_overflow)
+{
+    char str[MAX_STR_LEN+11] = {0};
+    memset(str,'a', MAX_STR_LEN+10);
+    logger_spy_write(str);
+    
+    uint32_t buffer_len = strlen(logger_spy_get_string());
+
+    CHECK(buffer_len == MAX_STR_LEN);
+}
+
+
 
 
 /* 
