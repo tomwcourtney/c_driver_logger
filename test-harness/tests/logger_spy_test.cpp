@@ -10,6 +10,7 @@ TEST_GROUP(LoggerSpyTestGroup)
 {
     void setup()
     {
+        logger_spy_init();
     }
 
     void teardown()
@@ -28,7 +29,44 @@ TEST(LoggerSpyTestGroup, spy_empty_when_nothing_done)
 
     // Check length of string is 0
     CHECK(len == 0);
+}
 
+// spy contains string that is last sent
+TEST(LoggerSpyTestGroup, spy_contains_string_that_is_last_sent)
+{
+    // test out
+    char write_out[MAX_STR_LEN] = {0};
+    sprintf(write_out, "memes");
+
+    // write little
+    logger_spy_write(write_out);
+
+    // get stored string
+    char * read_out;
+    read_out = logger_spy_get_string();
+
+    // make sure both strings equal
+    CHECK(strcmp(write_out, read_out) == 0);
+}
+
+// big string overwritten by little string works as expected
+TEST(LoggerSpyTestGroup, big_string_overwritten_by_little_string_works_as_expected)
+{
+    char write_big[MAX_STR_LEN] = {0};
+    sprintf(write_big, "hellllloo");
+    // test out
+    char write_little[MAX_STR_LEN] = {0};
+    sprintf(write_little, "memes");
+
+    logger_spy_write(write_big);
+    logger_spy_write(write_little);
+
+    // get stored string
+    char * read_out;
+    read_out = logger_spy_get_string();
+
+    // make sure both strings equal
+    CHECK(strcmp(write_little, read_out) == 0);
 }
 
 // 
