@@ -24,7 +24,7 @@ endif
 # SRC_DIRS specifies directories containing
 # production code C and CPP files.
 #
-# SRC_DIRS += spies
+SRC_DIRS += ../src
 
 # --- TEST_SRC_FILES and TEST_SRC_DIRS ---
 # Test files are always included in the build.

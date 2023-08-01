@@ -1,18 +1,21 @@
 #include "CppUTest/TestHarness.h"
-#include "../spies/logger_spy.h"
 
 
 extern "C"
 {
+#include "../spies/logger_spy.h"
+#include "../../src/logger.h"
 	/*
 	 * Add your c-only include files here
 	 */
 }
 
-TEST_GROUP(MyCode)
+TEST_GROUP(LoggerTest)
 {
     void setup()
     {
+        logger_spy_init();
+        logger_init();
     }
 
     void teardown()
@@ -20,25 +23,24 @@ TEST_GROUP(MyCode)
     }
 };
 
-TEST(MyCode, test1)
+logger_verbosity_t/* 
+do_init_check_no_outputs
+*/
+TEST(LoggerTest, do_init_check_no_outputs)
 {
-    /*
-     * Instantiate your class, or call the function, you want to test.
-     * Then delete this comment
-     */
-    CHECK(true);
+    LONGS_EQUAL(logger_get_output_count(), 0);
 }
 
-// 
-
-
-/* 
-Do nothing and check no bytes sent
-*/
 
 /*
 Log when there is no destination and ensure no bytes are sent
 */
+TEST(LoggerTest, Log_when_there_is_no_destination_and_ensure_no_bytes_are_sent)
+{
+    LONGS_EQUAL(logger_get_output_count(), 0);
+}
+
+
 
 /*
 
