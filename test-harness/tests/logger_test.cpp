@@ -2,8 +2,9 @@
 
 extern "C"
 {
-#include "../spies/logger_spy.h"
-#include "../../src/logger.h"
+    #include <string.h>
+    #include "../spies/logger_spy.h"
+    #include "../../src/logger.h"
 	/*
 	 * Add your c-only include files here
 	 */
@@ -101,13 +102,13 @@ TEST(LoggerTest, global_verbosity_blocks_more_verbose_logs)
 
     LONGS_EQUAL(0, strlen(logger_spy_get_string()));
 }
+
 /*disable destination and check that messages are no longer logged*/
 TEST(LoggerTest, testing_disable_can_disable)
 {
-    char * id = {spy_destination}
-    logger_register_destination(logger_spy_write, DEBUG, true, id);
+    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
     // disable destination
-    logger_disable_dest(id);
+    logger_disable_dest("spy_destination");
     // Log message 
     logger_log(ERROR, "help");
     //Check no log message got through

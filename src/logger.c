@@ -1,7 +1,9 @@
 /* put log code here */
 #include "logger.h"
-
+ 
 typedef struct {
+    const char * id; 
+    bool enabled;
     write_function write;
     logger_verbosity_t verbosity;
 } logger_destination_t;
@@ -18,17 +20,20 @@ void logger_init()
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
-    if(global_verbosity == OFF)
+    if(destination.enabled)
     {
-        if (verbosity <= destination.verbosity)
+        if(global_verbosity == OFF)
         {
-            destination.write(message);
+            if (verbosity <= destination.verbosity)
+            {
+                destination.write(message);
+            }
         }
-    }
-    else{
-        if(verbosity <= global_verbosity)
-        {
-            destination.write(message);
+        else{
+            if(verbosity <= global_verbosity)
+            {
+                destination.write(message);
+            }
         }
     }
 }
@@ -40,6 +45,8 @@ uint32_t logger_get_output_count(void)
 
 void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbosity, bool enabled, const char * id)
 {
+    destination.id = id;
+    destination.enabled = enabled;
     destination.write = fn_ptr;
     destination.verbosity = verbosity;
 }
@@ -49,7 +56,11 @@ void logger_set_global_verbosity(logger_verbosity_t verbosity)
     global_verbosity = verbosity;
 }
 
-void logger_disable_all()
+void logger_disable_dest(const char * id)
 {
+    if(!(strcmp(destination.id,id)))
+    {
+        destination.enabled = false;
+    }
     return;
 }

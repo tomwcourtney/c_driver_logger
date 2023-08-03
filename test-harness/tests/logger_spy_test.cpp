@@ -3,6 +3,7 @@
 
 extern "C"
 {
+    #include <string.h>
     #include "../spies/logger_spy.h"
 }
 
