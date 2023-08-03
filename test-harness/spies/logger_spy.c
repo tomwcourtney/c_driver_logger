@@ -15,7 +15,10 @@ char * logger_spy_get_string(void)
     return last_string;
 }
 
-void logger_spy_write(char * data)
+void logger_spy_write(const char * data)
 {
     strncpy(last_string, data, MAX_STR_LEN);
 }
+
+
+

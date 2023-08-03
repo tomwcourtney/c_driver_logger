@@ -23,7 +23,7 @@ TEST_GROUP(LoggerTest)
     }
 };
 
-logger_verbosity_t/* 
+/* 
 do_init_check_no_outputs
 */
 TEST(LoggerTest, do_init_check_no_outputs)
@@ -35,9 +35,13 @@ TEST(LoggerTest, do_init_check_no_outputs)
 /*
 Log when there is no destination and ensure no bytes are sent
 */
-TEST(LoggerTest, Log_when_there_is_no_destination_and_ensure_no_bytes_are_sent)
+TEST(LoggerTest, log_and_see_log)
 {
-    LONGS_EQUAL(logger_get_output_count(), 0);
+    logger_register_destination(logger_spy_write);
+
+    logger_log(DEBUG, "Some string");
+
+    LONGS_EQUAL(strcmp(logger_spy_get_string(), "Some string"),0);
 }
 
 
