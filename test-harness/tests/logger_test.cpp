@@ -208,3 +208,58 @@ TEST(LoggerTest, log_to_two_destinations)
     STRCMP_EQUAL("crumb", logger_spy_get_string());
     STRCMP_EQUAL("crumb", logger_spy_get_string_2());
 }
+
+/*disable one destinations and check that no messages get logged*/
+TEST(LoggerTest, disable_one_destinations)
+{
+    // Register destinations
+    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+
+    // disable one of the destinations
+    logger_disable_dest("dest1");
+
+    // log message 
+    logger_log(DEBUG, "hey");
+
+    // check it didnt arrive to destiation 1
+    STRCMP_EQUAL("", logger_spy_get_string());
+    // check it did arrive to the second
+    STRCMP_EQUAL("hey", logger_spy_get_string_2());
+}
+
+/*
+enable all destinations and check that messages are now logged
+*/
+TEST(LoggerTest, enable_all_destinations)
+{
+    // Register destinations
+    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+
+    // disable all
+    logger_disable_all();
+    
+    // log
+    logger_log(DEBUG, "eif0tkpasif");
+
+    // check no log
+    STRCMP_EQUAL("", logger_spy_get_string());
+    STRCMP_EQUAL("", logger_spy_get_string_2());
+
+    // enable all
+    logger_enable_all();
+
+    // log
+    logger_log(DEBUG, "LKJOAFJOPKPO");
+
+    // check log
+    STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string());
+    STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string_2());
+}
+
+/*
+Create two destinations, disable only one, send a log and verify it is sent to the enabled destination but not to the disabled destination
+Create two destinations, set one verbosity higher then the other and check that message only gets through one destions
+Make sure adding more destinations than MAX_DESTINATIONS doesn't fuck
+*/
