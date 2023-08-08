@@ -64,3 +64,12 @@ void logger_disable_dest(const char * id)
     }
     return;
 }
+
+void logger_enable_dest(const char * id)
+{
+    if(!(strcmp(destination.id,id)))
+    {
+        destination.enabled = true;
+    }
+    return;
+}

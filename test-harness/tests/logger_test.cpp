@@ -117,6 +117,30 @@ TEST(LoggerTest, testing_disable_can_disable)
 }
 /*
 enable destination and check that messages are logged
+*/
+TEST(LoggerTest, enable_destination_then_check_logging_works)
+{
+
+    // Register destination disabled
+    logger_register_destination(logger_spy_write, DEBUG, false, "spy_destination");
+
+    // Log
+    logger_log(DEBUG, "Message");
+
+    // Check spy
+    CHECK(strlen(logger_spy_get_string())==0);
+
+    // Enable destination
+    logger_enable_dest("spy_destination");
+
+    // Log
+    logger_log(DEBUG, "Message");
+
+    // Check
+    STRCMP_EQUAL("Message", logger_spy_get_string());
+}
+
+/*
 disable all destinations and check that no messages get logged
 enable all and check that messages are now logged
 */

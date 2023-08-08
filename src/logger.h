@@ -21,4 +21,5 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...);
 void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbosity, bool enabled, const char * id);
 void logger_set_global_verbosity(logger_verbosity_t);
 void logger_disable_dest(const char * id);
+void logger_enable_dest(const char * id);
 #endif
