@@ -70,7 +70,7 @@ TEST(LoggerTest, lower_verbosity_logged)
 
 
 /*
-change verbosity all and check that lower verbosity messages aren't logged
+Log a higher verbosity if the global verbosity is set higher than the destination
 */
 TEST(LoggerTest, global_verbosity_allows_higher_verbosity)
 {
@@ -80,11 +80,11 @@ TEST(LoggerTest, global_verbosity_allows_higher_verbosity)
     // Set global verbosity to something other than off
     logger_set_global_verbosity(WARNING);
 
-    // Do a log that shouldn't log 
+    // Do a log that wouldn't log if it weren't for global verbosity
     logger_log(WARNING,"message");
 
     // Check the value of the log
-    STRCMP_EQUAL("message", logger_spy_get_string());
+    STRCMP_EQUAL(logger_spy_get_string(), "message");
 
 }
 
@@ -142,7 +142,69 @@ TEST(LoggerTest, enable_destination_then_check_logging_works)
 
 /*
 disable all destinations and check that no messages get logged
-enable all and check that messages are now logged
 */
 
+TEST(LoggerTest, disable_all_destinations_no_messages_logged)
+{
+    // register destination enabled
+    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
 
+    // log
+    logger_log(DEBUG, "yeet");
+
+    // check logged
+    STRCMP_EQUAL("yeet", logger_spy_get_string());
+
+    // disable all destinations
+    logger_disable_all();
+
+    // log
+    logger_log(DEBUG, "leet");
+
+    // check didn't log
+    CHECK(strlen(logger_spy_get_string()) == 0);
+}
+
+/*
+enable all and check that messages are now logged
+*/
+TEST(LoggerTest, enable_all_destinations_see_messages_logged)
+{
+    // register destination enabled
+    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+
+    // disable all destinations
+    logger_disable_all();
+
+    // log
+    logger_log(DEBUG, "yeet");
+
+    CHECK(strlen(logger_spy_get_string()) == 0);
+
+    // enable all destinations
+    logger_enable_all();
+
+    // log
+    logger_log(DEBUG, "yeet");
+    
+    // check logged
+    STRCMP_EQUAL("yeet", logger_spy_get_string());
+    
+}
+
+/*
+Create two destinations and log message and verify that it's logged in both locations
+*/
+TEST(LoggerTest, log_to_two_destinations)
+{
+    // Register destinations
+    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+
+    // Log to both destinations
+    logger_log(DEBUG, "crumb");
+
+    // Check both logs
+    STRCMP_EQUAL("crumb", logger_spy_get_string());
+    STRCMP_EQUAL("crumb", logger_spy_get_string_2());
+}

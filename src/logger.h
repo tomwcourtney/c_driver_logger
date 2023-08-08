@@ -22,4 +22,6 @@ void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbo
 void logger_set_global_verbosity(logger_verbosity_t);
 void logger_disable_dest(const char * id);
 void logger_enable_dest(const char * id);
+void logger_disable_all(void);
+void logger_enable_all(void);
 #endif
