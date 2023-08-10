@@ -93,7 +93,7 @@ void logger_enable_dest(const char * id);
 void logger_disable_all(void);
 
 /**
- * @brief Enable all logger destinations.
+ * @brief Enable all logger destination to output.
  *
  */
 void logger_enable_all(void);
