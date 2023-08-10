@@ -209,8 +209,10 @@ TEST(LoggerTest, log_to_two_destinations)
     STRCMP_EQUAL("crumb", logger_spy_get_string_2());
 }
 
-/*disable one destinations and check that no messages get logged*/
-TEST(LoggerTest, disable_one_destinations)
+/*
+Create two destinations, disable only one, send a log and verify it is sent to the enabled destination but not to the disabled destination
+*/
+TEST(LoggerTest, disable_one_destination)
 {
     // Register destinations
     logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
@@ -258,8 +260,53 @@ TEST(LoggerTest, enable_all_destinations)
     STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string_2());
 }
 
+/*Create two destinations, set one verbosity higher then the other and check that message only gets through one destions*/
+TEST(LoggerTest, create_two_destinations_set_one_verbosity_higher_then_other_verify_message_goes_to_only_one_dest)
+{
+    // Register destinations
+    // Verbosity 1 debug
+    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
+    // Verbosity 2 error
+    logger_register_destination(logger_spy_write2, ERROR, true, "dest2");
+       
+    // Log ERROR
+    logger_log(WARNING, "LKJOAFJOPKPO");
+    
+    // Check that only destination 2 got through
+    STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string());
+    STRCMP_EQUAL("", logger_spy_get_string_2());
+}
+
+
+
 /*
-Create two destinations, disable only one, send a log and verify it is sent to the enabled destination but not to the disabled destination
-Create two destinations, set one verbosity higher then the other and check that message only gets through one destions
-Make sure adding more destinations than MAX_DESTINATIONS doesn't fuck
+Make sure adding more destinations than MAX_DESTINATIONS doesn't fuck up
+*/
+TEST(LoggerTest, overflow_max_destination)
+{
+    // Adding the two logs to fill buffer
+    logger_register_destination(logger_spy_write, ERROR, true, "dest1");
+    logger_register_destination(logger_spy_write2, ERROR, true, "dest2");
+    
+    // Overflowing buffer massivly 
+    for(int i =0; i<2048; i++)
+    {
+        logger_register_destination(logger_spy_write, ERROR, true, "dest3");
+    }
+    // Log ERROR
+    logger_log(ERROR, "LKJOAFJOPKPO");
+
+    // Check that string got recived by the 
+    // two detinations
+    STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string());
+    STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string_2());
+
+}
+
+/*
+Destinations cannot be created unless the initalisation funciton has been called 
+Log a string that is max string length+1 and that the logged message contains the string up to max sting length long 
+
+attempting to register destination with an ID thats already registered fails
+
 */

@@ -54,11 +54,14 @@ uint32_t logger_get_output_count(void)
 
 void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbosity, bool enabled, const char * id)
 {
-    destinations[destinations_head].id = id;
-    destinations[destinations_head].enabled = enabled;
-    destinations[destinations_head].write = fn_ptr;
-    destinations[destinations_head].verbosity = verbosity;
-    destinations_head++;
+    if((destinations_head+1)<=MAX_DESTINATIONS)
+    {
+        destinations[destinations_head].id = id;
+        destinations[destinations_head].enabled = enabled;
+        destinations[destinations_head].write = fn_ptr;
+        destinations[destinations_head].verbosity = verbosity;
+        destinations_head++;
+    }
 }
 
 void logger_set_global_verbosity(logger_verbosity_t verbosity)
