@@ -16,6 +16,15 @@ logger_destination_t destinations[MAX_DESTINATIONS] = {0};
 
 logger_verbosity_t global_verbosity = OFF;
 
+/**
+ * @brief Checks if a destination with the same ID already exists in the registered destination list
+ *
+ * @param [in] id - ID to be searched for
+ *
+ * @return True if ID exists, false otherwise
+ */
+static bool logger_destination_exists(const char * id);
+
 void logger_init()
 {
     // Set global verbosity to something other than off
@@ -49,19 +58,26 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 
 uint32_t logger_get_output_count(void)
 {
-    return 0;
+    return destinations_head;
 }
 
 void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbosity, bool enabled, const char * id)
 {
-    if((destinations_head+1)<=MAX_DESTINATIONS)
+    if (destinations_head >= MAX_DESTINATIONS)
     {
-        destinations[destinations_head].id = id;
-        destinations[destinations_head].enabled = enabled;
-        destinations[destinations_head].write = fn_ptr;
-        destinations[destinations_head].verbosity = verbosity;
-        destinations_head++;
+        return;
     }
+
+    if (logger_destination_exists(id))
+    {
+        return;
+    }
+
+    destinations[destinations_head].id = id;
+    destinations[destinations_head].enabled = enabled;
+    destinations[destinations_head].write = fn_ptr;
+    destinations[destinations_head].verbosity = verbosity;
+    destinations_head++;
 }
 
 void logger_set_global_verbosity(logger_verbosity_t verbosity)
@@ -108,4 +124,18 @@ void logger_enable_all(void)
     {
         destinations[i].enabled = true;
     }
+}
+
+static bool logger_destination_exists(const char * id)
+{
+    bool found = false;
+
+    for (int i = 0; i < destinations_head; i++)
+    {
+        if (strcmp(id, destinations[i].id) == 0)
+        {
+            found = true;
+        }
+    }
+    return found;
 }
