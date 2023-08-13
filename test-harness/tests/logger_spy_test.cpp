@@ -86,25 +86,9 @@ TEST(LoggerSpyTestGroup, test_that_the_spy_string_does_not_overflow)
 
 
 /* 
-Do nothing and check no bytes sent
-*/
-
-/*
-Log when there is no destination and ensure no bytes are sent
-*/
-
-/*
-
-define a destination and send string and see that its logged
-change verbosity level for destination and check that lower verbosity messages are not logged
-change verbosity level for destination and check that higher and equal verbosity messages are logged
-change verbosity all and check that lower verbosity messages aren't logged
-change verbosity all and check that higher and equal verbosity messages are logged
-disable destination and check that messages are no longer logged
-enable destination and check that messages are logged
-disable all destinations and check that no messages get logged
-enable all and check that messages are now logged
-
+when no time is set logger_spy_get_time returns 00:00 time 
+logger_spy_set_time can be used to set the current date and time 
+logger_spy_get_time returns a string that contains the time set in set time
 */
 
 

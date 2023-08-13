@@ -304,9 +304,57 @@ TEST(LoggerTest, overflow_max_destination)
 }
 
 /*
-Destinations cannot be created unless the initalisation funciton has been called 
 Log a string that is max string length+1 and that the logged message contains the string up to max sting length long 
+*/
+TEST(LoggerTest, strings_are_cut_off_at_max_sring_length)
+{
 
+    // Define a destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "dest");
+    // logg a message to desitation that is one longer then the max string length
+    std::string test_string(MAX_STR_LEN+1, 'a');
+    logger_log(ERROR,test_string.c_str());
+
+    // Test to see if string matches one of MAX_STR_LEN
+    test_string.erase(test_string.begin() + MAX_STR_LEN);
+    STRCMP_EQUAL(test_string.c_str(), logger_spy_get_string());
+}
+
+/*
 attempting to register destination with an ID thats already registered fails
+*/
+TEST(LoggerTest, register_existing_id_fails)
+{
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+
+    LONGS_EQUAL(1, logger_get_output_count());
+}
+
+/*
+zero 
+the get time string can be passed into the init function as a pointer
+
+one 
+when timestamping is toggled on the log time is prepended to the start of message in form [time]
+when timestamping is toggle off the log time is not prepended to start of message
+
+when verbosity prepending is turned on the verbosity is added to start of message [verbosity]
+when verbosity prepending is turned off the verbosity is not added to start of message 
+
+when both verbosity and timestamping are on the message is formatted [TimeStamp,Verbosity]
+
+when logger_set_global_time_stamping(false) is called, no destiations add timestamps to there messages
+when logger_set_global_time_stamping(true) is called, all destiations add timestamps to there messages
+
+when logger_set_global_verb_prepend(false) is called, no destinations add verbosity to front of message
+when logger_set_global_verb_prepend(true) is called, all destinations add verbosity to front of message
+
+when colour is toggled on ERROR messages appear red 
+when colour is toggled on WARINGING messages appear Yellow 
+when colour is toggled on WARINGING messages appear Yellow 
+when colour is toggled on INFO messages appear Green 
+when colour is toggled on DEBUG have no colour 
+
 
 */
