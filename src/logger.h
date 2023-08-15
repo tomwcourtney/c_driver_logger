@@ -11,6 +11,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define MAX_LOG_SIZE 1024
+
 /**
  * @brief Typedef'd enum representing verbosity levels, in increasing order of verbosity from least verbose (ERROR, only logs ERRORs) to most verbose (DEBUG, will log all). When a destination is configured with a certain verbosity,
  * messages logged with that verbosity or LOWER will be sent to the destination. e.g. a destination with verbosity INFO will receive logs logged with verbosity INFO, WARNING and ERROR, but not DEBUG.
@@ -29,11 +31,17 @@ typedef enum{
 typedef void (*write_function)(const char *);
 
 /**
+ * @brief Writes a timestamp over the char array passed in as parameter.
+*/
+typedef void (*get_time_function)(char *);
+
+/**
  * @brief Zeros destination head counter, sets the global verbosity level to off 
  * and does all house keeping needed before defining destiatnions and logging messages
  * 
+ * @param [in] fn_ptr - The function that is to be used for retrieving log timestamp.
  */
-void logger_init();
+void logger_init(get_time_function fn_ptr);
 
 /**
  * @brief Returns the amount of registered destions
@@ -95,5 +103,12 @@ void logger_disable_all(void);
  *
  */
 void logger_enable_all(void);
+
+/**
+ * @brief Enable a specific destination output to be logged.
+ * 
+ * @param [in] id - String that is the unique identifier of the destination.
+ */
+logger_set_global_timestamping(bool );
 
 #endif

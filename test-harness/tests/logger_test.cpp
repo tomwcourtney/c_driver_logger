@@ -15,7 +15,7 @@ TEST_GROUP(LoggerTest)
     void setup()
     {
         logger_spy_init();
-        logger_init();
+        logger_init(NULL);
     }
 
     void teardown()
@@ -332,29 +332,62 @@ TEST(LoggerTest, register_existing_id_fails)
 }
 
 /*
-zero 
-the get time string can be passed into the init function as a pointer
+Initialise the logger with no get time function
+*/
+TEST(LoggerTest, initialise_logger_with_no_get_time_function)
+{
+    // Initialise the logger with a null get time function
+    logger_init(NULL);
+    // Register a destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    // Log to destination
+    logger_log(ERROR, "Test");
+    // Check that the log has no timestamp in it
+    STRCMP_EQUAL("Test", logger_spy_get_string())
+}
 
-one 
-when timestamping is toggled on the log time is prepended to the start of message in form [time]
-when timestamping is toggle off the log time is not prepended to start of message
+/*
+Initialise the logger with a get time function and check that a log has the correct timestamp
+*/
+TEST(LoggerTest, initialise_the_logger_with_get_time_function)
+{
+    // Initialise the logger with a null get time function
+    logger_init(logger_spy_get_time);
+    // Register a destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    // Log to destination
+    logger_log(ERROR, "Test");
+    // Check that the log has no timestamp in it
+    STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string())
+}
 
-when verbosity prepending is turned on the verbosity is added to start of message [verbosity]
-when verbosity prepending is turned off the verbosity is not added to start of message 
-
-when both verbosity and timestamping are on the message is formatted [TimeStamp,Verbosity]
-
+/*
 when logger_set_global_time_stamping(false) is called, no destiations add timestamps to there messages
+*/
+TEST(LoggerTest, toggle_timestamps_no_timestamp)
+{
+    // Initialise the logger with a null get time function
+    logger_init(logger_spy_get_time);
+    // Register a destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    // toggle timestamping off
+    logger_set_global_timestamping(false);
+    // log
+    logger_log(ERROR, "Test");
+    // check log doesn't contain timestamp
+    STRCMP_EQUAL("Test", logger_spy_get_string());
+}
+
+/*
 when logger_set_global_time_stamping(true) is called, all destiations add timestamps to there messages
 
 when logger_set_global_verb_prepend(false) is called, no destinations add verbosity to front of message
 when logger_set_global_verb_prepend(true) is called, all destinations add verbosity to front of message
+
 
 when colour is toggled on ERROR messages appear red 
 when colour is toggled on WARINGING messages appear Yellow 
 when colour is toggled on WARINGING messages appear Yellow 
 when colour is toggled on INFO messages appear Green 
 when colour is toggled on DEBUG have no colour 
-
-
 */

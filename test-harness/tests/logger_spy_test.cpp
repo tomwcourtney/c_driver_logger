@@ -85,7 +85,9 @@ TEST(LoggerSpyTestGroup, test_that_the_spy_string_does_not_overflow)
 /* when no time is set logger_spy_get_time returns 00:00 time */
 TEST(LoggerSpyTestGroup, when_no_time_set_logger_spy_get_time_returns_0000)
 {
-    STRCMP_EQUAL("1970-1-1T00:00:00", logger_spy_get_time());
+    char str[MAX_STR_LEN+11] = {0};
+    logger_spy_get_time(str);
+    STRCMP_EQUAL("1970-1-1T00:00:00",str);
 }
 
 /* logger_spy_set_time can be used to set the current date and time  */
@@ -94,7 +96,10 @@ TEST(LoggerSpyTestGroup, logger_spy_set_time_can_set_time)
     char str[50] = {0};
     sprintf(str, "2023-1-1T10:1:30");
     logger_spy_set_time(str);
-    STRCMP_EQUAL(str, logger_spy_get_time());
+
+    char str2[MAX_STR_LEN+11] = {0};
+    logger_spy_get_time(str2);
+    STRCMP_EQUAL("2023-1-1T10:1:30",str2);
 }
 
 

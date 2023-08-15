@@ -43,9 +43,9 @@ void logger_spy_write2(const char * data)
     strncpy(last_string2, data, MAX_STR_LEN);
 }
 
-char * logger_spy_get_time(void)
+void logger_spy_get_time(char * time)
 {
-    return current_time;
+    strcpy(time, current_time);
 }
 
 void logger_spy_set_time(char * time)

@@ -1,9 +1,11 @@
 /* put log code here */
 #include "logger.h"
- 
+#include <stdio.h>
+
 #define MAX_DESTINATIONS 2
 uint8_t destinations_head = 0;
 
+#define TIMESTAMP_MAX_SIZE 50
 
 typedef struct {
     const char * id; 
@@ -16,6 +18,9 @@ logger_destination_t destinations[MAX_DESTINATIONS] = {0};
 
 logger_verbosity_t global_verbosity = OFF;
 
+// This function is where the logger gets time from
+get_time_function get_time = NULL;
+
 /**
  * @brief Checks if a destination with the same ID already exists in the registered destination list
  *
@@ -25,16 +30,30 @@ logger_verbosity_t global_verbosity = OFF;
  */
 static bool logger_destination_exists(const char * id);
 
-void logger_init()
+void logger_init(get_time_function fn_ptr)
 {
     // Set global verbosity to something other than off
     destinations_head = 0;
     logger_set_global_verbosity(OFF);
+    get_time = fn_ptr;
     return;
 }
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
+    char logged_message[MAX_LOG_SIZE] = {0};
+
+    // If the logger has a get time function
+    if(get_time != NULL)
+    {
+        char timestamp[TIMESTAMP_MAX_SIZE] = {0};
+        get_time(timestamp);
+        sprintf(logged_message, "[%s] ", timestamp);    
+   
+    }
+
+    strncat(logged_message, message, MAX_LOG_SIZE);
+
     for(uint8_t i = 0; i < destinations_head; i++)
     {
         if(destinations[i].enabled)
@@ -43,13 +62,13 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
             {
                 if (verbosity <= destinations[i].verbosity)
                 {
-                    destinations[i].write(message);
+                    destinations[i].write(logged_message);
                 }
             }
             else{
                 if(verbosity <= global_verbosity)
                 {
-                    destinations[i].write(message);
+                    destinations[i].write(logged_message);
                 }
             }
         }
