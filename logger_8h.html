@@ -74,6 +74,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
@@ -89,12 +90,22 @@ $(function() {
 </div>
 <p><a href="logger_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab6bc945ce840e4f0a16ec0fb12acc1a0"><td class="memItemLeft" align="right" valign="top"><a id="ab6bc945ce840e4f0a16ec0fb12acc1a0" name="ab6bc945ce840e4f0a16ec0fb12acc1a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_LOG_SIZE</b>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:ab6bc945ce840e4f0a16ec0fb12acc1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a5e48e71c47e99dd78598f39df2f50823"><td class="memItemLeft" align="right" valign="top"><a id="a5e48e71c47e99dd78598f39df2f50823" name="a5e48e71c47e99dd78598f39df2f50823"></a>
 typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>write_function</b>) (const char *)</td></tr>
 <tr class="memdesc:a5e48e71c47e99dd78598f39df2f50823"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of our function pointer type for the write funtions. <br /></td></tr>
 <tr class="separator:a5e48e71c47e99dd78598f39df2f50823"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa206d7409ea6a11856e259142120b729"><td class="memItemLeft" align="right" valign="top"><a id="aa206d7409ea6a11856e259142120b729" name="aa206d7409ea6a11856e259142120b729"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>get_time_function</b>) (char *)</td></tr>
+<tr class="memdesc:aa206d7409ea6a11856e259142120b729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a timestamp over the char array passed in as parameter. <br /></td></tr>
+<tr class="separator:aa206d7409ea6a11856e259142120b729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -112,9 +123,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acca02da5a5a8b842893ecc30ea12fda7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#acca02da5a5a8b842893ecc30ea12fda7">logger_init</a> ()</td></tr>
-<tr class="memdesc:acca02da5a5a8b842893ecc30ea12fda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeros destination head counter, sets the global verbosity level to off and does all house keeping needed before defining destiatnions and logging messages.  <br /></td></tr>
-<tr class="separator:acca02da5a5a8b842893ecc30ea12fda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039ba5b07cabe488d35a0355aac2db58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a039ba5b07cabe488d35a0355aac2db58">logger_init</a> (<a class="el" href="logger_8h.html#aa206d7409ea6a11856e259142120b729">get_time_function</a> fn_ptr)</td></tr>
+<tr class="memdesc:a039ba5b07cabe488d35a0355aac2db58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeros destination head counter, sets the global verbosity level to off and does all house keeping needed before defining destiatnions and logging messages.  <br /></td></tr>
+<tr class="separator:a039ba5b07cabe488d35a0355aac2db58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa27850e67dacc1bed9635bd8797a88"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a7fa27850e67dacc1bed9635bd8797a88">logger_get_output_count</a> ()</td></tr>
 <tr class="memdesc:a7fa27850e67dacc1bed9635bd8797a88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the amount of registered destions.  <br /></td></tr>
 <tr class="separator:a7fa27850e67dacc1bed9635bd8797a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,6 +150,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a360cf156e1d71dfae2130345f0b98db3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a360cf156e1d71dfae2130345f0b98db3">logger_enable_all</a> (void)</td></tr>
 <tr class="memdesc:a360cf156e1d71dfae2130345f0b98db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable all logger destination to output.  <br /></td></tr>
 <tr class="separator:a360cf156e1d71dfae2130345f0b98db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6416c336abbc7144e9300249c4afc01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#ad6416c336abbc7144e9300249c4afc01">logger_set_global_timestamping</a> (bool)</td></tr>
+<tr class="memdesc:ad6416c336abbc7144e9300249c4afc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a specific destination output to be logged.  <br /></td></tr>
+<tr class="separator:ad6416c336abbc7144e9300249c4afc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="logger_8h.html" title="logger.h is a general use logger created for use in C embedded projects.">logger.h</a> is a general use logger created for use in C embedded projects. </p>
@@ -256,8 +270,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acca02da5a5a8b842893ecc30ea12fda7" name="acca02da5a5a8b842893ecc30ea12fda7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acca02da5a5a8b842893ecc30ea12fda7">&#9670;&#160;</a></span>logger_init()</h2>
+<a id="a039ba5b07cabe488d35a0355aac2db58" name="a039ba5b07cabe488d35a0355aac2db58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a039ba5b07cabe488d35a0355aac2db58">&#9670;&#160;</a></span>logger_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,13 +279,20 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void logger_init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="logger_8h.html#aa206d7409ea6a11856e259142120b729">get_time_function</a>&#160;</td>
+          <td class="paramname"><em>fn_ptr</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Zeros destination head counter, sets the global verbosity level to off and does all house keeping needed before defining destiatnions and logging messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fn_ptr</td><td>- The function that is to be used for retrieving log timestamp. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -365,6 +386,32 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">verbosity</td><td>- the minium verbosity level that will be allowed to be logged to this destination </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enabled</td><td>- if false the destination wont log messages until the <a class="el" href="logger_8h.html#a90556cffcd0f30248eeef9d88b14ae25" title="Enable a specific destination output to be logged.">logger_enable_dest()</a> is called and the destination re-enabled </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>- The id string accociated with this destination, needed to identify destination when changing config </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad6416c336abbc7144e9300249c4afc01" name="ad6416c336abbc7144e9300249c4afc01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6416c336abbc7144e9300249c4afc01">&#9670;&#160;</a></span>logger_set_global_timestamping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">logger_set_global_timestamping </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable a specific destination output to be logged. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>- String that is the unique identifier of the destination. </td></tr>
   </table>
   </dd>
 </dl>
