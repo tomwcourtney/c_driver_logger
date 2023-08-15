@@ -8,10 +8,14 @@ char ret_string[MAX_STR_LEN+1] = {0};
 char last_string2[MAX_STR_LEN+1] = {0};
 char ret_string2[MAX_STR_LEN+1] = {0};
 
+char current_time[MAX_STR_LEN+1] = {0};
+
 void logger_spy_init(void)
 {
     memset(last_string, 0, MAX_STR_LEN);
     memset(last_string2, 0, MAX_STR_LEN);
+    memset(current_time, 0, MAX_STR_LEN);
+    sprintf(current_time, "1970-1-1T00:00:00");
     return;
 }
 
@@ -39,5 +43,13 @@ void logger_spy_write2(const char * data)
     strncpy(last_string2, data, MAX_STR_LEN);
 }
 
+char * logger_spy_get_time(void)
+{
+    return current_time;
+}
 
+void logger_spy_set_time(char * time)
+{
+    strncpy(current_time, time, MAX_STR_LEN);
+}
 
