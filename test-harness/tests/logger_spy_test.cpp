@@ -82,13 +82,17 @@ TEST(LoggerSpyTestGroup, test_that_the_spy_string_does_not_overflow)
     CHECK(buffer_len == MAX_STR_LEN);
 }
 
-
+/* when no time is set logger_get_time returns 00:00 time */
+TEST(LoggerSpyTestGroup, when_no_time_set_logger_spy_get_time_returns_0000)
+{
+    STRCMP_EQUAL("1970‐1‐1T00:00:00", logger_get_time());
+}
 
 
 /* 
-when no time is set logger_spy_get_time returns 00:00 time 
-logger_spy_set_time can be used to set the current date and time 
-logger_spy_get_time returns a string that contains the time set in set time
+logger_get_time can be used to set the current date and time 
+logger_get_time returns a string that contains the time set in set time
 */
+
 
 
