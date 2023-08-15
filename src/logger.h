@@ -1,9 +1,9 @@
 /**
  * @file logger.h
  * @author Pat, tom and dean 
- * @brief logger.h is a general use logger created for use in C embedded projects. The logger supports defininfing
+ * @brief hello logger.h is a general use logger created for use in C embedded projects. The logger supports defininfing
  * multipule "destinations" that log messages can be simutanously logged to. Verbosity can be configured on a per 
- * destination level.  
+ * destination level. 
  */
 
 #ifndef LOGGER_GUARD_H
