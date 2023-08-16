@@ -109,6 +109,20 @@ void logger_enable_all(void);
  * 
  * @param [in] id - String that is the unique identifier of the destination.
  */
-logger_set_global_timestamping(bool );
+void logger_set_global_timestamping(bool timestamping);
 
+/**
+ * @brief Sets the global verbosity prepending 
+ * 
+ * @param [in] verbprepend - boolean to tuen on or off
+ */
+void logger_set_global_verbosity_prepend(bool verbprepend);
+
+/**
+ * @brief Turns on or off the inputted destionations id's colour useage, the terminal colours work via 
+ * c excape sequences added onto the strings.
+ * @param [in] id - id for destination to change the colour usage
+ * @param [in] b_isColourOn - if true the colours will be on, if false the colours will be off 
+ */
+void logger_set_dest_colour(const char *id, bool b_isColourOn);
 #endif

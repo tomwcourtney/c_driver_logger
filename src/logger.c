@@ -6,17 +6,57 @@
 uint8_t destinations_head = 0;
 
 #define TIMESTAMP_MAX_SIZE 50
+#define ID_MAX_SIZE 50
+#define VERB_TAG_MAX_SIZE 5
 
+/** 
+ * @brief Structure for a destination to send your logs to.
+ *
+ * @param id        - Unique string identifier of the  
+ * @param enabled   - True if destination should log
+ * @param write     - Function that the destination writes out to when logging
+ * @param severity  - The minimum severity level message that the destination will log
+ * @param colour    - True if message should log with ansi colour codes. Colour corresponds to severity.
+*/
 typedef struct {
-    const char * id; 
+    char id[ID_MAX_SIZE];
     bool enabled;
     write_function write;
     logger_verbosity_t verbosity;
+    bool colour;
 } logger_destination_t;
+
+
+
+// These tags correspond to the severity of a log. 
+// They're the first character of each severity.
+const char * severity_tags[] = 
+{
+    "O",
+    "E",
+    "W",
+    "I",
+    "D"
+};
+
+// These are the ansi codes for terminal colours
+const char * colours[] = 
+{
+    "off",      // Place holder for off    
+    "\x1b[31m", // Red      - Error
+    "\x1b[33m", // Yellow   - Warning
+    "\x1b[32m", // Green    - Info
+    "\x1b[0m",  // Off      - Debug 
+    "\x1b[34m", // Blue     - Not used
+    "\x1b[35m", // Magenta  - Not used
+    "\x1b[36m"  // Cyan     - Not used
+};
 
 logger_destination_t destinations[MAX_DESTINATIONS] = {0};
 
 logger_verbosity_t global_verbosity = OFF;
+bool global_timestamping = true;
+bool global_verbosity_prepend = true;
 
 // This function is where the logger gets time from
 get_time_function get_time = NULL;
@@ -36,23 +76,39 @@ void logger_init(get_time_function fn_ptr)
     destinations_head = 0;
     logger_set_global_verbosity(OFF);
     get_time = fn_ptr;
+    global_timestamping = true;
     return;
 }
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
-    char logged_message[MAX_LOG_SIZE] = {0};
+    char logged_message[MAX_LOG_SIZE+1] = {0};
+    char logged_message_colour[MAX_LOG_SIZE+1] = {0};
+    
+    // Add the colour
+    snprintf(logged_message_colour, MAX_LOG_SIZE, "%s", colours[verbosity]); 
 
     // If the logger has a get time function
-    if(get_time != NULL)
+    if(get_time != NULL && global_timestamping)
     {
-        char timestamp[TIMESTAMP_MAX_SIZE] = {0};
+        char timestamp[TIMESTAMP_MAX_SIZE+1] = {0};
         get_time(timestamp);
-        sprintf(logged_message, "[%s] ", timestamp);    
+        snprintf(logged_message, MAX_LOG_SIZE, "[%s] ", timestamp);    
+        snprintf(logged_message_colour, MAX_LOG_SIZE, "[%s] ", timestamp);    
    
     }
 
+    // If the logger versobity tag is turned on
+    if(global_verbosity_prepend)
+    {
+        char severity_tag[VERB_TAG_MAX_SIZE] = {0};
+        snprintf(severity_tag, VERB_TAG_MAX_SIZE, "[%s] ", severity_tags[verbosity]);   
+        strncat(logged_message, severity_tag, MAX_LOG_SIZE);
+        strncat(logged_message_colour, severity_tag, MAX_LOG_SIZE);
+    }
+
     strncat(logged_message, message, MAX_LOG_SIZE);
+    strncat(logged_message_colour, message, MAX_LOG_SIZE);
 
     for(uint8_t i = 0; i < destinations_head; i++)
     {
@@ -62,13 +118,20 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
             {
                 if (verbosity <= destinations[i].verbosity)
                 {
-                    destinations[i].write(logged_message);
+                    if(destinations[i].colour){
+                        destinations[i].write(logged_message_colour);
+                    }else{
+                        destinations[i].write(logged_message);
+                    }
                 }
             }
             else{
                 if(verbosity <= global_verbosity)
                 {
-                    destinations[i].write(logged_message);
+                    if(destinations[i].colour)
+                        destinations[i].write(logged_message_colour);
+                    else
+                        destinations[i].write(logged_message);
                 }
             }
         }
@@ -92,10 +155,11 @@ void logger_register_destination(write_function fn_ptr, logger_verbosity_t verbo
         return;
     }
 
-    destinations[destinations_head].id = id;
+    strncpy(destinations[destinations_head].id, id, ID_MAX_SIZE);
     destinations[destinations_head].enabled = enabled;
     destinations[destinations_head].write = fn_ptr;
     destinations[destinations_head].verbosity = verbosity;
+    destinations[destinations_head].colour = false;
     destinations_head++;
 }
 
@@ -157,4 +221,27 @@ static bool logger_destination_exists(const char * id)
         }
     }
     return found;
+}
+
+void logger_set_global_timestamping(bool timestamping)
+{
+    global_timestamping = timestamping;
+}
+
+void logger_set_global_verbosity_prepend(bool verbprepend)
+{
+    global_verbosity_prepend = verbprepend;
+}
+
+void logger_set_dest_colour(const char *id, bool b_isColourOn)
+{
+    for(uint8_t i = 0 ; i < destinations_head; i++)
+    {
+        if(!(strcmp(destinations[i].id,id)))
+        {
+            destinations[i].colour = b_isColourOn;
+        }
+    }
+
+    return;
 }

@@ -343,7 +343,7 @@ TEST(LoggerTest, initialise_logger_with_no_get_time_function)
     // Log to destination
     logger_log(ERROR, "Test");
     // Check that the log has no timestamp in it
-    STRCMP_EQUAL("Test", logger_spy_get_string())
+    STRCMP_EQUAL("Test", logger_spy_get_string());
 }
 
 /*
@@ -358,7 +358,7 @@ TEST(LoggerTest, initialise_the_logger_with_get_time_function)
     // Log to destination
     logger_log(ERROR, "Test");
     // Check that the log has no timestamp in it
-    STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string())
+    STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string());
 }
 
 /*
@@ -380,14 +380,168 @@ TEST(LoggerTest, toggle_timestamps_no_timestamp)
 
 /*
 when logger_set_global_time_stamping(true) is called, all destiations add timestamps to there messages
-
-when logger_set_global_verb_prepend(false) is called, no destinations add verbosity to front of message
-when logger_set_global_verb_prepend(true) is called, all destinations add verbosity to front of message
-
-
-when colour is toggled on ERROR messages appear red 
-when colour is toggled on WARINGING messages appear Yellow 
-when colour is toggled on WARINGING messages appear Yellow 
-when colour is toggled on INFO messages appear Green 
-when colour is toggled on DEBUG have no colour 
 */
+TEST(LoggerTest, turn_global_timestamping_on_all_destinations_add_timestamp)
+{
+    // init logger with time function
+    logger_init(logger_spy_get_time);
+    // register 2 destinations
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write2, DEBUG, true, "jeff2");
+    // toggle timestamping off
+    logger_set_global_timestamping(false);
+    // toggle timestamping on
+    logger_set_global_timestamping(true);
+    // log
+    logger_log(ERROR, "Test");
+
+    // check both destinations get timestamped
+    STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string());
+    STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string_2());
+}
+
+/*
+when logger_set_global_verb_prepend(false) is called, no destinations add verbosity to front of message
+*/
+TEST(LoggerTest, global_verbosity_false_does_nothing)
+{
+    // init logger with time function
+    logger_init(logger_spy_get_time);
+    // register destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // set global verbosity prepernd to false 
+    logger_set_global_verbosity_prepend(false);
+    // log a message
+    logger_log(ERROR, "dog");
+    // check message has no verbosity added
+    STRCMP_EQUAL("[1970-1-1T00:00:00] dog", logger_spy_get_string());
+}
+
+/*
+when logger_set_global_verb_prepend(true) is called, all destinations add verbosity to front of message
+*/
+TEST(LoggerTest, global_verbosity_true_add_verbosity_tag_to_log)
+{
+    // init logger with time function
+    logger_init(logger_spy_get_time);
+    // register destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // set global verbosity prepernd to false 
+    logger_set_global_verbosity_prepend(true);
+    // log a message
+    logger_log(ERROR, "dog");
+    // check message has no verbosity added
+    STRCMP_EQUAL("[1970-1-1T00:00:00] [E] dog", logger_spy_get_string());
+}
+
+/*
+when timestamping is off, and verbosity prepend on, log doesn't shopw timestamp but shows verbosity
+*/
+TEST(LoggerTest, global_verbosity_on_timestamping_off_log_shows_verbosity_not_timestamp)
+{
+    // init logger with time function
+    logger_init(logger_spy_get_time);
+    // register destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // set global verbosity prepernd to false 
+    logger_set_global_timestamping(false);
+    logger_set_global_verbosity_prepend(true);
+    // log a message
+    logger_log(ERROR, "dog");
+    // check message has no verbosity added
+    STRCMP_EQUAL("[E] dog", logger_spy_get_string());
+}
+
+/*
+when colour is toggled on ERROR messages appear red 
+*/
+TEST(LoggerTest, colour_on_logs_are_coloured_error)
+{
+    // Register a destination
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_set_global_verbosity_prepend(false);
+    // toggle colout on 
+    logger_set_dest_colour("jeff1", true);
+    // Do a log
+    logger_log(ERROR, "dog");
+
+    // Check that the log has a colour appended to it
+    STRCMP_EQUAL("\x1b[31mdog", logger_spy_get_string());
+}
+
+/*
+when colour is toggled on WARNING messages appear Yellow 
+*/
+TEST(LoggerTest, colour_on_logs_are_coloured_warning)
+{
+    // Register a destination
+    logger_set_global_timestamping(false);
+    logger_set_global_verbosity_prepend(false);
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // toggle colout on 
+    logger_set_dest_colour("jeff1", true);
+    // Do a log
+    logger_log(WARNING, "dog");
+
+    // Check that the log has a colour appended to it
+    STRCMP_EQUAL("\x1b[33mdog", logger_spy_get_string());
+}
+
+/*
+when colour is toggled on INFO messages appear Green 
+*/
+TEST(LoggerTest, colour_on_logs_are_coloured_info)
+{
+    // Register a destination
+    logger_set_global_timestamping(false);
+        logger_set_global_verbosity_prepend(false);
+
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // toggle colout on 
+    logger_set_dest_colour("jeff1", true);
+    // Do a log
+    logger_log(INFO, "dog");
+
+    // Check that the log has a colour appended to it
+    STRCMP_EQUAL("\x1b[32mdog", logger_spy_get_string());
+}
+/*
+when colour is toggled on DEBUG have no colour
+*/
+TEST(LoggerTest, colour_on_logs_are_coloured_debug)
+{
+   
+    // Register a destination
+    logger_set_global_timestamping(false);
+    logger_set_global_verbosity_prepend(false);
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    // toggle colout on 
+    logger_set_dest_colour("jeff1", true);
+    // Do a log
+    logger_log(DEBUG, "dog");
+
+    // Check that the log has a colour appended to it
+    STRCMP_EQUAL("\x1b[0mdog", logger_spy_get_string());
+}
+
+/*
+Colours can be toggled per desitionation using the logger_set_dest_colour(id, bool)
+*/
+TEST(LoggerTest, colour_logs_can_be_toggled_per_dest)
+{
+    // Register a destination
+    logger_set_global_timestamping(false);
+    logger_set_global_verbosity_prepend(false);
+    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write2, DEBUG, true, "jeff2");
+    // toggle colout on 
+    logger_set_dest_colour("jeff1", true);
+    logger_set_dest_colour("jeff2", false);
+    // Do a log
+    logger_log(DEBUG, "dog");
+
+    // Check the true destination has colour in it 
+    STRCMP_EQUAL("\x1b[0mdog", logger_spy_get_string());
+    // Check the false destination has colour in it 
+    STRCMP_EQUAL("dog", logger_spy_get_string_2());
+}
