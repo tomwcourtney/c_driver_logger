@@ -150,9 +150,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a360cf156e1d71dfae2130345f0b98db3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a360cf156e1d71dfae2130345f0b98db3">logger_enable_all</a> (void)</td></tr>
 <tr class="memdesc:a360cf156e1d71dfae2130345f0b98db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable all logger destination to output.  <br /></td></tr>
 <tr class="separator:a360cf156e1d71dfae2130345f0b98db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6416c336abbc7144e9300249c4afc01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#ad6416c336abbc7144e9300249c4afc01">logger_set_global_timestamping</a> (bool)</td></tr>
-<tr class="memdesc:ad6416c336abbc7144e9300249c4afc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a specific destination output to be logged.  <br /></td></tr>
-<tr class="separator:ad6416c336abbc7144e9300249c4afc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8f19c88285f9da163153df07cfbd9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a7e8f19c88285f9da163153df07cfbd9f">logger_set_global_timestamping</a> (bool timestamping)</td></tr>
+<tr class="memdesc:a7e8f19c88285f9da163153df07cfbd9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a specific destination output to be logged.  <br /></td></tr>
+<tr class="separator:a7e8f19c88285f9da163153df07cfbd9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eaaeafed789506df5bb70c507aac31e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a9eaaeafed789506df5bb70c507aac31e">logger_set_global_verbosity_prepend</a> (bool verbprepend)</td></tr>
+<tr class="memdesc:a9eaaeafed789506df5bb70c507aac31e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the global verbosity prepending.  <br /></td></tr>
+<tr class="separator:a9eaaeafed789506df5bb70c507aac31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0774409726cfbd7a6694c7496e4d20ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a0774409726cfbd7a6694c7496e4d20ec">logger_set_dest_colour</a> (const char *id, bool b_isColourOn)</td></tr>
+<tr class="memdesc:a0774409726cfbd7a6694c7496e4d20ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns on or off the inputted destionations id's colour useage, the terminal colours work via c excape sequences added onto the strings.  <br /></td></tr>
+<tr class="separator:a0774409726cfbd7a6694c7496e4d20ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="logger_8h.html" title="logger.h is a general use logger created for use in C embedded projects.">logger.h</a> is a general use logger created for use in C embedded projects. </p>
@@ -392,17 +398,54 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad6416c336abbc7144e9300249c4afc01" name="ad6416c336abbc7144e9300249c4afc01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6416c336abbc7144e9300249c4afc01">&#9670;&#160;</a></span>logger_set_global_timestamping()</h2>
+<a id="a0774409726cfbd7a6694c7496e4d20ec" name="a0774409726cfbd7a6694c7496e4d20ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0774409726cfbd7a6694c7496e4d20ec">&#9670;&#160;</a></span>logger_set_dest_colour()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">logger_set_global_timestamping </td>
+          <td class="memname">void logger_set_dest_colour </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b_isColourOn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Turns on or off the inputted destionations id's colour useage, the terminal colours work via c excape sequences added onto the strings. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>- id for destination to change the colour usage </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_isColourOn</td><td>- if true the colours will be on, if false the colours will be off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7e8f19c88285f9da163153df07cfbd9f" name="a7e8f19c88285f9da163153df07cfbd9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e8f19c88285f9da163153df07cfbd9f">&#9670;&#160;</a></span>logger_set_global_timestamping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void logger_set_global_timestamping </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><em>timestamping</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -438,6 +481,32 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">verbosity</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9eaaeafed789506df5bb70c507aac31e" name="a9eaaeafed789506df5bb70c507aac31e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eaaeafed789506df5bb70c507aac31e">&#9670;&#160;</a></span>logger_set_global_verbosity_prepend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void logger_set_global_verbosity_prepend </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbprepend</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the global verbosity prepending. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">verbprepend</td><td>- boolean to tuen on or off </td></tr>
   </table>
   </dd>
 </dl>

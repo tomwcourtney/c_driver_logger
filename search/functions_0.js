@@ -8,6 +8,8 @@ var searchData=
   ['logger_5finit_5',['logger_init',['../logger_8h.html#a039ba5b07cabe488d35a0355aac2db58',1,'logger.c']]],
   ['logger_5flog_6',['logger_log',['../logger_8h.html#a9fecc453a1dc3daf8da7fa32e1cc2567',1,'logger.c']]],
   ['logger_5fregister_5fdestination_7',['logger_register_destination',['../logger_8h.html#a9f4add0e0d817f6bdea6379ae27f7a05',1,'logger.c']]],
-  ['logger_5fset_5fglobal_5ftimestamping_8',['logger_set_global_timestamping',['../logger_8h.html#ad6416c336abbc7144e9300249c4afc01',1,'logger.h']]],
-  ['logger_5fset_5fglobal_5fverbosity_9',['logger_set_global_verbosity',['../logger_8h.html#a9b293444f87c3de4daf50cf1566b1be4',1,'logger.c']]]
+  ['logger_5fset_5fdest_5fcolour_8',['logger_set_dest_colour',['../logger_8h.html#a0774409726cfbd7a6694c7496e4d20ec',1,'logger.c']]],
+  ['logger_5fset_5fglobal_5ftimestamping_9',['logger_set_global_timestamping',['../logger_8h.html#a7e8f19c88285f9da163153df07cfbd9f',1,'logger.c']]],
+  ['logger_5fset_5fglobal_5fverbosity_10',['logger_set_global_verbosity',['../logger_8h.html#a9b293444f87c3de4daf50cf1566b1be4',1,'logger.c']]],
+  ['logger_5fset_5fglobal_5fverbosity_5fprepend_11',['logger_set_global_verbosity_prepend',['../logger_8h.html#a9eaaeafed789506df5bb70c507aac31e',1,'logger.c']]]
 ];

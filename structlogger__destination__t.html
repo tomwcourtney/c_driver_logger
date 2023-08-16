@@ -75,12 +75,15 @@ $(function() {
   <div class="headertitle"><div class="title">logger_destination_t Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Structure for a destination to send your logs to.  
+ <a href="structlogger__destination__t.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6cc39ae585e18ef98a872bce17f9a360"><td class="memItemLeft" align="right" valign="top"><a id="a6cc39ae585e18ef98a872bce17f9a360" name="a6cc39ae585e18ef98a872bce17f9a360"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="separator:a6cc39ae585e18ef98a872bce17f9a360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5eadf68347f54024fcb208340c8faae"><td class="memItemLeft" align="right" valign="top"><a id="aa5eadf68347f54024fcb208340c8faae" name="aa5eadf68347f54024fcb208340c8faae"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> [ID_MAX_SIZE]</td></tr>
+<tr class="separator:aa5eadf68347f54024fcb208340c8faae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeea96d2487f6f5c2f005c3e6dd2654bc"><td class="memItemLeft" align="right" valign="top"><a id="aeea96d2487f6f5c2f005c3e6dd2654bc" name="aeea96d2487f6f5c2f005c3e6dd2654bc"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled</b></td></tr>
 <tr class="separator:aeea96d2487f6f5c2f005c3e6dd2654bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -90,8 +93,24 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled</b></td></tr>
 <tr class="memitem:a14eb7667274e1f588eb0ca9c87cb4166"><td class="memItemLeft" align="right" valign="top"><a id="a14eb7667274e1f588eb0ca9c87cb4166" name="a14eb7667274e1f588eb0ca9c87cb4166"></a>
 <a class="el" href="logger_8h.html#a3c5cd7b38774777786be659efbfe8196">logger_verbosity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>verbosity</b></td></tr>
 <tr class="separator:a14eb7667274e1f588eb0ca9c87cb4166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc1d9c6a868d6324808e3e5159bdbe7d"><td class="memItemLeft" align="right" valign="top"><a id="abc1d9c6a868d6324808e3e5159bdbe7d" name="abc1d9c6a868d6324808e3e5159bdbe7d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>colour</b></td></tr>
+<tr class="separator:abc1d9c6a868d6324808e3e5159bdbe7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Structure for a destination to send your logs to. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>- Unique string identifier of the <br  />
+ </td></tr>
+    <tr><td class="paramname">enabled</td><td>- True if destination should log </td></tr>
+    <tr><td class="paramname">write</td><td>- Function that the destination writes out to when logging </td></tr>
+    <tr><td class="paramname">severity</td><td>- The minimum severity level message that the destination will log </td></tr>
+    <tr><td class="paramname">colour</td><td>- True if message should log with ansi colour codes. Colour corresponds to severity. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/logger.c</li>
 </ul>
 </div><!-- contents -->
