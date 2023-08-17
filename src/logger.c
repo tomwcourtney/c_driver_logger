@@ -92,10 +92,11 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
     if(get_time != NULL && global_timestamping)
     {
         char timestamp[TIMESTAMP_MAX_SIZE+1] = {0};
+        char timestamp_brackets[TIMESTAMP_MAX_SIZE+1+3] = {0};
         get_time(timestamp);
         snprintf(logged_message, MAX_LOG_SIZE, "[%s] ", timestamp);    
-        snprintf(logged_message_colour, MAX_LOG_SIZE, "[%s] ", timestamp);    
-   
+        snprintf(timestamp_brackets, TIMESTAMP_MAX_SIZE+1+3, "[%s] ", timestamp);
+        strncat(logged_message_colour, timestamp_brackets, MAX_LOG_SIZE);
     }
 
     // If the logger versobity tag is turned on
