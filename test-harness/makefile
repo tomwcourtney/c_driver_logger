@@ -24,8 +24,9 @@ endif
 # SRC_DIRS specifies directories containing
 # production code C and CPP files.
 #
-SRC_DIRS += ../CG_SoilSensor/logger_tests/src
-# SRC_DIRS += example-platform
+SRC_DIRS += ../src
+# SRC_DIRS += spies
+
 
 # --- TEST_SRC_FILES and TEST_SRC_DIRS ---
 # Test files are always included in the build.
@@ -36,9 +37,9 @@ SRC_DIRS += ../CG_SoilSensor/logger_tests/src
 # TEST_SRC_FILES specifies individual test files to build.
 # TEST_SRC_DIRS, builds everything in the directory
 
-TEST_SRC_FILES +=
+TEST_SRC_FILES += 
 TEST_SRC_DIRS += tests
-TEST_SRC_DIRS += tests/GPIO_Fake
+TEST_SRC_DIRS += spies
 #	tests/example-fff \
 #	tests/fff \
 
