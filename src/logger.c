@@ -1,6 +1,7 @@
 /* put log code here */
 #include "logger.h"
 #include <stdio.h>
+#include <stdarg.h>
 
 #define MAX_DESTINATIONS 2
 uint8_t destinations_head = 0;
@@ -82,9 +83,16 @@ void logger_init(get_time_function fn_ptr)
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
+    char formatted_message[MAX_LOG_SIZE+1] = {0};
     char logged_message[MAX_LOG_SIZE+1] = {0};
     char logged_message_colour[MAX_LOG_SIZE+1] = {0};
     
+    // unpack args and build formatted string
+    va_list args;
+    va_start(args, message);
+    vsnprintf(formatted_message, MAX_LOG_SIZE, message, args);
+    va_end(args);
+
     // Add the colour
     snprintf(logged_message_colour, MAX_LOG_SIZE, "%s", colours[verbosity]); 
 
@@ -108,8 +116,8 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
         strncat(logged_message_colour, severity_tag, MAX_LOG_SIZE);
     }
 
-    strncat(logged_message, message, MAX_LOG_SIZE);
-    strncat(logged_message_colour, message, MAX_LOG_SIZE);
+    strncat(logged_message, formatted_message, MAX_LOG_SIZE);
+    strncat(logged_message_colour, formatted_message, MAX_LOG_SIZE);
 
     for(uint8_t i = 0; i < destinations_head; i++)
     {
