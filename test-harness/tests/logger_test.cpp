@@ -545,3 +545,113 @@ TEST(LoggerTest, colour_logs_can_be_toggled_per_dest)
     // Check the false destination has colour in it 
     STRCMP_EQUAL("dog", logger_spy_get_string_2());
 }
+
+/*
+Colours work with timestamp prepend
+*/
+TEST(LoggerTest, colour_logs_with_timestamp)
+{
+    logger_init(logger_spy_get_time);
+    logger_set_global_verbosity_prepend(false);
+
+    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+
+    logger_set_dest_colour("yeeter", true);
+
+    logger_log(WARNING, "REE");
+
+    STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] REE", logger_spy_get_string());
+}
+
+/*
+Colours work with verbosity prepend
+*/
+TEST(LoggerTest, colour_logs_with_verbosity)
+{
+    logger_init(NULL);
+    logger_set_global_verbosity_prepend(true);
+
+    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+
+    logger_set_dest_colour("yeeter", true);
+
+    logger_log(WARNING, "REE");
+
+    STRCMP_EQUAL("\x1b[33m[W] REE", logger_spy_get_string());
+}
+
+/*
+Colours work with both prepends
+*/
+TEST(LoggerTest, colour_logs_with_verbosity_and_timestamp)
+{
+    logger_init(logger_spy_get_time);
+    logger_set_global_verbosity_prepend(true);
+
+    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+
+    logger_set_dest_colour("yeeter", true);
+
+    logger_log(WARNING, "REE");
+
+    STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] [W] REE", logger_spy_get_string());
+}
+
+/*
+Test that variadic parameters/format string works when no color/timestamp/verbosity
+*/
+TEST(LoggerTest, variadic_parameters_log_no_prepends)
+{
+    logger_init(NULL);
+    logger_set_global_verbosity_prepend(false);
+    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+
+    logger_log(WARNING, "Test: %d\n", 3);
+
+    STRCMP_EQUAL("Test: 3\n", logger_spy_get_string());
+}
+
+/*
+Test that variadic parameters/format string works with colour
+*/
+TEST(LoggerTest, variadic_parameters_log_colour)
+{
+    logger_init(NULL);
+    logger_set_global_verbosity_prepend(false);
+    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_set_dest_colour("vari", true);
+
+    logger_log(WARNING, "Test: %d\n", 3);
+
+    STRCMP_EQUAL("\x1b[33mTest: 3\n", logger_spy_get_string());
+}
+
+/*
+Test that variadic parameters/format string works with colour and verbosity
+*/
+TEST(LoggerTest, variadic_parameters_log_colour_and_verbosity)
+{
+    logger_init(NULL);
+    logger_set_global_verbosity_prepend(true);
+    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_set_dest_colour("vari", true);
+
+    logger_log(WARNING, "Test: %d\n", 3);
+
+    STRCMP_EQUAL("\x1b[33m[W] Test: 3\n", logger_spy_get_string());
+}
+
+/*
+Test that variadic parameters/format string works with colour, verbosity and timestamp
+*/
+TEST(LoggerTest, variadic_parameters_log_colour_verbosity_and_time)
+{
+    logger_init(logger_spy_get_time);
+    logger_set_global_verbosity_prepend(true);
+    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_set_dest_colour("vari", true);
+
+    logger_log(WARNING, "Test: %d\n", 3);
+
+    STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] [W] Test: 3\n", logger_spy_get_string());
+}
