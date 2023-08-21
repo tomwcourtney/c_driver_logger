@@ -110,12 +110,12 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>get_time_fu
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a3c5cd7b38774777786be659efbfe8196"><td class="memItemLeft" align="right" valign="top"><a id="a3c5cd7b38774777786be659efbfe8196" name="a3c5cd7b38774777786be659efbfe8196"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logger_8h.html#a3c5cd7b38774777786be659efbfe8196">logger_verbosity_t</a> { <br />
-&#160;&#160;<b>OFF</b>
-, <b>ERROR</b>
-, <b>WARNING</b>
-, <b>INFO</b>
+&#160;&#160;<b>LOGGER_OFF</b>
+, <b>LOGGER_ERROR</b>
+, <b>LOGGER_WARNING</b>
+, <b>LOGGER_INFO</b>
 , <br />
-&#160;&#160;<b>DEBUG</b>
+&#160;&#160;<b>LOGGER_DEBUG</b>
 <br />
  }</td></tr>
 <tr class="memdesc:a3c5cd7b38774777786be659efbfe8196"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef'd enum representing verbosity levels, in increasing order of verbosity from least verbose (ERROR, only logs ERRORs) to most verbose (DEBUG, will log all). When a destination is configured with a certain verbosity, messages logged with that verbosity or LOWER will be sent to the destination. e.g. a destination with verbosity INFO will receive logs logged with verbosity INFO, WARNING and ERROR, but not DEBUG. <br /></td></tr>

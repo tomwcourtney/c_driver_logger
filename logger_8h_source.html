@@ -87,11 +87,11 @@ $(function() {
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define MAX_LOG_SIZE 1024</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="logger_8h.html#a3c5cd7b38774777786be659efbfe8196">   20</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    OFF,</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    ERROR,   <span class="comment">//Lowest </span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    WARNING,</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    INFO,</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    DEBUG,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    LOGGER_OFF,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    LOGGER_ERROR,   <span class="comment">//Lowest </span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    LOGGER_WARNING,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    LOGGER_INFO,</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    LOGGER_DEBUG,</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}<a class="code hl_enumeration" href="logger_8h.html#a3c5cd7b38774777786be659efbfe8196">logger_verbosity_t</a>;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="logger_8h.html#a5e48e71c47e99dd78598f39df2f50823">   31</a></span><span class="keyword">typedef</span> void (*<a class="code hl_typedef" href="logger_8h.html#a5e48e71c47e99dd78598f39df2f50823">write_function</a>)(<span class="keyword">const</span> <span class="keywordtype">char</span> *);</div>
