@@ -18,11 +18,11 @@
  * messages logged with that verbosity or LOWER will be sent to the destination. e.g. a destination with verbosity INFO will receive logs logged with verbosity INFO, WARNING and ERROR, but not DEBUG.
 */
 typedef enum{
-    OFF,
-    ERROR,   //Lowest 
-    WARNING,
-    INFO,
-    DEBUG,
+    LOGGER_OFF,
+    LOGGER_ERROR,   //Lowest 
+    LOGGER_WARNING,
+    LOGGER_INFO,
+    LOGGER_DEBUG,
 }logger_verbosity_t;
 
 /**
