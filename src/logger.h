@@ -19,7 +19,7 @@
 */
 typedef enum{
     LOGGER_OFF,
-    LOGGER_ERROR,   //Lowest 
+    LOGGER_ERR,
     LOGGER_WARNING,
     LOGGER_INFO,
     LOGGER_DEBUG,
