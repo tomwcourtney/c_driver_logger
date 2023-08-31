@@ -1,30 +1,18 @@
 var indexSectionsWithContent =
 {
-  0: "glw",
-  1: "l",
-  2: "l",
-  3: "l",
-  4: "gw",
-  5: "l"
+  0: "l",
+  1: "l"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "classes",
-  2: "files",
-  3: "functions",
-  4: "typedefs",
-  5: "enums"
+  1: "classes"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Classes",
-  2: "Files",
-  3: "Functions",
-  4: "Typedefs",
-  5: "Enumerations"
+  1: "Classes"
 };
 
