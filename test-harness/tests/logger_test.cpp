@@ -4,7 +4,7 @@ extern "C"
 {
     #include <string.h>
     #include "../spies/logger_spy.h"
-    #include "../../src/logger.h"
+    #include "../../inc/logger.h"
 	/*
 	 * Add your c-only include files here
 	 */
@@ -37,9 +37,9 @@ define a destination and send string and see that its logged
 */
 TEST(LoggerTest, log_and_see_log)
 {
-    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "spy_destination");
 
-    logger_log(DEBUG, "Some string");
+    logger_log(LOGGER_DEBUG, "Some string");
 
     LONGS_EQUAL(strcmp(logger_spy_get_string(), "Some string"),0);
 }
@@ -49,9 +49,9 @@ change verbosity level for destination and check that higer verbosity messages a
 */
 TEST(LoggerTest, higher_verbosity_not_logged)
 {
-    logger_register_destination(logger_spy_write, WARNING, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_ERR, true, "spy_destination");
 
-    logger_log(INFO, "A Test");
+    logger_log(LOGGER_WARNING, "A Test");
 
     LONGS_EQUAL(0, strlen(logger_spy_get_string()));
 }
@@ -61,9 +61,9 @@ change verbosity level for destination and check that lower and equal verbosity 
 */
 TEST(LoggerTest, lower_verbosity_logged)
 {
-    logger_register_destination(logger_spy_write, WARNING, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_WARNING, true, "spy_destination");
 
-    logger_log(ERROR, "A Test");
+    logger_log(LOGGER_ERR, "A Test");
 
     STRCMP_EQUAL("A Test", logger_spy_get_string());
 }
@@ -75,13 +75,13 @@ Log a higher verbosity if the global verbosity is set higher than the destinatio
 TEST(LoggerTest, global_verbosity_allows_higher_verbosity)
 {
     // Register the destination
-    logger_register_destination(logger_spy_write, ERROR, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_ERR, true, "spy_destination");
 
     // Set global verbosity to something other than off
-    logger_set_global_verbosity(WARNING);
+    logger_set_global_verbosity(LOGGER_WARNING);
 
     // Do a log that wouldn't log if it weren't for global verbosity
-    logger_log(WARNING,"message");
+    logger_log(LOGGER_WARNING,"message");
 
     // Check the value of the log
     STRCMP_EQUAL(logger_spy_get_string(), "message");
@@ -93,12 +93,12 @@ change verbosity all and check that higher and equal verbosity messages are logg
 */
 TEST(LoggerTest, global_verbosity_blocks_more_verbose_logs)
 {
-    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "spy_destination");
 
-    logger_set_global_verbosity(ERROR);
+    logger_set_global_verbosity(LOGGER_ERR);
 
     // do a log that should go through, except for global verbosity
-    logger_log(DEBUG, "help");
+    logger_log(LOGGER_DEBUG, "help");
 
     LONGS_EQUAL(0, strlen(logger_spy_get_string()));
 }
@@ -106,11 +106,11 @@ TEST(LoggerTest, global_verbosity_blocks_more_verbose_logs)
 /*disable destination and check that messages are no longer logged*/
 TEST(LoggerTest, testing_disable_can_disable)
 {
-    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "spy_destination");
     // disable destination
     logger_disable_dest("spy_destination");
     // Log message 
-    logger_log(ERROR, "help");
+    logger_log(LOGGER_ERR, "help");
     //Check no log message got through
     LONGS_EQUAL(0, strlen(logger_spy_get_string()));
 
@@ -122,10 +122,10 @@ TEST(LoggerTest, enable_destination_then_check_logging_works)
 {
 
     // Register destination disabled
-    logger_register_destination(logger_spy_write, DEBUG, false, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, false, "spy_destination");
 
     // Log
-    logger_log(DEBUG, "Message");
+    logger_log(LOGGER_DEBUG, "Message");
 
     // Check spy
     CHECK(strlen(logger_spy_get_string())==0);
@@ -134,7 +134,7 @@ TEST(LoggerTest, enable_destination_then_check_logging_works)
     logger_enable_dest("spy_destination");
 
     // Log
-    logger_log(DEBUG, "Message");
+    logger_log(LOGGER_DEBUG, "Message");
 
     // Check
     STRCMP_EQUAL("Message", logger_spy_get_string());
@@ -147,10 +147,10 @@ disable all destinations and check that no messages get logged
 TEST(LoggerTest, disable_all_destinations_no_messages_logged)
 {
     // register destination enabled
-    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "spy_destination");
 
     // log
-    logger_log(DEBUG, "yeet");
+    logger_log(LOGGER_DEBUG, "yeet");
 
     // check logged
     STRCMP_EQUAL("yeet", logger_spy_get_string());
@@ -159,7 +159,7 @@ TEST(LoggerTest, disable_all_destinations_no_messages_logged)
     logger_disable_all();
 
     // log
-    logger_log(DEBUG, "leet");
+    logger_log(LOGGER_DEBUG, "leet");
 
     // check didn't log
     CHECK(strlen(logger_spy_get_string()) == 0);
@@ -171,13 +171,13 @@ enable all and check that messages are now logged
 TEST(LoggerTest, enable_all_destinations_see_messages_logged)
 {
     // register destination enabled
-    logger_register_destination(logger_spy_write, DEBUG, true, "spy_destination");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "spy_destination");
 
     // disable all destinations
     logger_disable_all();
 
     // log
-    logger_log(DEBUG, "yeet");
+    logger_log(LOGGER_DEBUG, "yeet");
 
     CHECK(strlen(logger_spy_get_string()) == 0);
 
@@ -185,7 +185,7 @@ TEST(LoggerTest, enable_all_destinations_see_messages_logged)
     logger_enable_all();
 
     // log
-    logger_log(DEBUG, "yeet");
+    logger_log(LOGGER_DEBUG, "yeet");
     
     // check logged
     STRCMP_EQUAL("yeet", logger_spy_get_string());
@@ -198,11 +198,11 @@ Create two destinations and log message and verify that it's logged in both loca
 TEST(LoggerTest, log_to_two_destinations)
 {
     // Register destinations
-    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
-    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, LOGGER_DEBUG, true, "dest2");
 
     // Log to both destinations
-    logger_log(DEBUG, "crumb");
+    logger_log(LOGGER_DEBUG, "crumb");
 
     // Check both logs
     STRCMP_EQUAL("crumb", logger_spy_get_string());
@@ -215,14 +215,14 @@ Create two destinations, disable only one, send a log and verify it is sent to t
 TEST(LoggerTest, disable_one_destination)
 {
     // Register destinations
-    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
-    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, LOGGER_DEBUG, true, "dest2");
 
     // disable one of the destinations
     logger_disable_dest("dest1");
 
     // log message 
-    logger_log(DEBUG, "hey");
+    logger_log(LOGGER_DEBUG, "hey");
 
     // check it didnt arrive to destiation 1
     STRCMP_EQUAL("", logger_spy_get_string());
@@ -236,14 +236,14 @@ enable all destinations and check that messages are now logged
 TEST(LoggerTest, enable_all_destinations)
 {
     // Register destinations
-    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
-    logger_register_destination(logger_spy_write2, DEBUG, true, "dest2");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "dest1");
+    logger_register_destination(logger_spy_write2, LOGGER_DEBUG, true, "dest2");
 
     // disable all
     logger_disable_all();
     
     // log
-    logger_log(DEBUG, "eif0tkpasif");
+    logger_log(LOGGER_DEBUG, "eif0tkpasif");
 
     // check no log
     STRCMP_EQUAL("", logger_spy_get_string());
@@ -253,7 +253,7 @@ TEST(LoggerTest, enable_all_destinations)
     logger_enable_all();
 
     // log
-    logger_log(DEBUG, "LKJOAFJOPKPO");
+    logger_log(LOGGER_DEBUG, "LKJOAFJOPKPO");
 
     // check log
     STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string());
@@ -264,13 +264,13 @@ TEST(LoggerTest, enable_all_destinations)
 TEST(LoggerTest, create_two_destinations_set_one_verbosity_higher_then_other_verify_message_goes_to_only_one_dest)
 {
     // Register destinations
-    // Verbosity 1 debug
-    logger_register_destination(logger_spy_write, DEBUG, true, "dest1");
-    // Verbosity 2 error
-    logger_register_destination(logger_spy_write2, ERROR, true, "dest2");
+    // Verbosity 1 LOGGER_DEBUG
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "dest1");
+    // Verbosity 2 LOGGER_ERR
+    logger_register_destination(logger_spy_write2, LOGGER_ERR, true, "dest2");
        
-    // Log ERROR
-    logger_log(WARNING, "LKJOAFJOPKPO");
+    // Log LOGGER_ERR
+    logger_log(LOGGER_WARNING, "LKJOAFJOPKPO");
     
     // Check that only destination 2 got through
     STRCMP_EQUAL("LKJOAFJOPKPO", logger_spy_get_string());
@@ -285,16 +285,16 @@ Make sure adding more destinations than MAX_DESTINATIONS doesn't fuck up
 TEST(LoggerTest, overflow_max_destination)
 {
     // Adding the two logs to fill buffer
-    logger_register_destination(logger_spy_write, ERROR, true, "dest1");
-    logger_register_destination(logger_spy_write2, ERROR, true, "dest2");
+    logger_register_destination(logger_spy_write, LOGGER_ERR, true, "dest1");
+    logger_register_destination(logger_spy_write2, LOGGER_ERR, true, "dest2");
     
     // Overflowing buffer massivly 
     for(int i =0; i<2048; i++)
     {
-        logger_register_destination(logger_spy_write, ERROR, true, "dest3");
+        logger_register_destination(logger_spy_write, LOGGER_ERR, true, "dest3");
     }
-    // Log ERROR
-    logger_log(ERROR, "LKJOAFJOPKPO");
+    // Log LOGGER_ERR
+    logger_log(LOGGER_ERR, "LKJOAFJOPKPO");
 
     // Check that string got recived by the 
     // two detinations
@@ -310,10 +310,10 @@ TEST(LoggerTest, strings_are_cut_off_at_max_sring_length)
 {
 
     // Define a destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "dest");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "dest");
     // logg a message to desitation that is one longer then the max string length
     std::string test_string(MAX_STR_LEN+1, 'a');
-    logger_log(ERROR,test_string.c_str());
+    logger_log(LOGGER_ERR,test_string.c_str());
 
     // Test to see if string matches one of MAX_STR_LEN
     test_string.erase(test_string.begin() + MAX_STR_LEN);
@@ -325,8 +325,8 @@ attempting to register destination with an ID thats already registered fails
 */
 TEST(LoggerTest, register_existing_id_fails)
 {
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff");
 
     LONGS_EQUAL(1, logger_get_output_count());
 }
@@ -339,9 +339,9 @@ TEST(LoggerTest, initialise_logger_with_no_get_time_function)
     // Initialise the logger with a null get time function
     logger_init(NULL);
     // Register a destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff");
     // Log to destination
-    logger_log(ERROR, "Test");
+    logger_log(LOGGER_ERR, "Test");
     // Check that the log has no timestamp in it
     STRCMP_EQUAL("Test", logger_spy_get_string());
 }
@@ -354,9 +354,9 @@ TEST(LoggerTest, initialise_the_logger_with_get_time_function)
     // Initialise the logger with a null get time function
     logger_init(logger_spy_get_time);
     // Register a destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff");
     // Log to destination
-    logger_log(ERROR, "Test");
+    logger_log(LOGGER_ERR, "Test");
     // Check that the log has no timestamp in it
     STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string());
 }
@@ -369,11 +369,11 @@ TEST(LoggerTest, toggle_timestamps_no_timestamp)
     // Initialise the logger with a null get time function
     logger_init(logger_spy_get_time);
     // Register a destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff");
     // toggle timestamping off
     logger_set_global_timestamping(false);
     // log
-    logger_log(ERROR, "Test");
+    logger_log(LOGGER_ERR, "Test");
     // check log doesn't contain timestamp
     STRCMP_EQUAL("Test", logger_spy_get_string());
 }
@@ -386,14 +386,14 @@ TEST(LoggerTest, turn_global_timestamping_on_all_destinations_add_timestamp)
     // init logger with time function
     logger_init(logger_spy_get_time);
     // register 2 destinations
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
-    logger_register_destination(logger_spy_write2, DEBUG, true, "jeff2");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write2, LOGGER_DEBUG, true, "jeff2");
     // toggle timestamping off
     logger_set_global_timestamping(false);
     // toggle timestamping on
     logger_set_global_timestamping(true);
     // log
-    logger_log(ERROR, "Test");
+    logger_log(LOGGER_ERR, "Test");
 
     // check both destinations get timestamped
     STRCMP_EQUAL("[1970-1-1T00:00:00] Test", logger_spy_get_string());
@@ -408,11 +408,11 @@ TEST(LoggerTest, global_verbosity_false_does_nothing)
     // init logger with time function
     logger_init(logger_spy_get_time);
     // register destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // set global verbosity prepernd to false 
     logger_set_global_verbosity_prepend(false);
     // log a message
-    logger_log(ERROR, "dog");
+    logger_log(LOGGER_ERR, "dog");
     // check message has no verbosity added
     STRCMP_EQUAL("[1970-1-1T00:00:00] dog", logger_spy_get_string());
 }
@@ -425,11 +425,11 @@ TEST(LoggerTest, global_verbosity_true_add_verbosity_tag_to_log)
     // init logger with time function
     logger_init(logger_spy_get_time);
     // register destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // set global verbosity prepernd to false 
     logger_set_global_verbosity_prepend(true);
     // log a message
-    logger_log(ERROR, "dog");
+    logger_log(LOGGER_ERR, "dog");
     // check message has no verbosity added
     STRCMP_EQUAL("[1970-1-1T00:00:00] [E] dog", logger_spy_get_string());
 }
@@ -442,83 +442,83 @@ TEST(LoggerTest, global_verbosity_on_timestamping_off_log_shows_verbosity_not_ti
     // init logger with time function
     logger_init(logger_spy_get_time);
     // register destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // set global verbosity prepernd to false 
     logger_set_global_timestamping(false);
     logger_set_global_verbosity_prepend(true);
     // log a message
-    logger_log(ERROR, "dog");
+    logger_log(LOGGER_ERR, "dog");
     // check message has no verbosity added
     STRCMP_EQUAL("[E] dog", logger_spy_get_string());
 }
 
 /*
-when colour is toggled on ERROR messages appear red 
+when colour is toggled on LOGGER_ERR messages appear red 
 */
-TEST(LoggerTest, colour_on_logs_are_coloured_error)
+TEST(LoggerTest, colour_on_logs_are_coloured_LOGGER_ERR)
 {
     // Register a destination
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     logger_set_global_verbosity_prepend(false);
     // toggle colout on 
     logger_set_dest_colour("jeff1", true);
     // Do a log
-    logger_log(ERROR, "dog");
+    logger_log(LOGGER_ERR, "dog");
 
     // Check that the log has a colour appended to it
     STRCMP_EQUAL("\x1b[31mdog", logger_spy_get_string());
 }
 
 /*
-when colour is toggled on WARNING messages appear Yellow 
+when colour is toggled on LOGGER_WARNING messages appear Yellow 
 */
-TEST(LoggerTest, colour_on_logs_are_coloured_warning)
+TEST(LoggerTest, colour_on_logs_are_coloured_LOGGER_WARNING)
 {
     // Register a destination
     logger_set_global_timestamping(false);
     logger_set_global_verbosity_prepend(false);
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // toggle colout on 
     logger_set_dest_colour("jeff1", true);
     // Do a log
-    logger_log(WARNING, "dog");
+    logger_log(LOGGER_WARNING, "dog");
 
     // Check that the log has a colour appended to it
     STRCMP_EQUAL("\x1b[33mdog", logger_spy_get_string());
 }
 
 /*
-when colour is toggled on INFO messages appear Green 
+when colour is toggled on LOGGER_DEBUG messages appear Green 
 */
-TEST(LoggerTest, colour_on_logs_are_coloured_info)
+TEST(LoggerTest, colour_on_logs_are_coloured_LOGGER_DEBUG)
 {
     // Register a destination
     logger_set_global_timestamping(false);
-        logger_set_global_verbosity_prepend(false);
+    logger_set_global_verbosity_prepend(false);
 
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // toggle colout on 
     logger_set_dest_colour("jeff1", true);
     // Do a log
-    logger_log(INFO, "dog");
+    logger_log(LOGGER_ERR, "dog");
 
     // Check that the log has a colour appended to it
-    STRCMP_EQUAL("\x1b[32mdog", logger_spy_get_string());
+    STRCMP_EQUAL("\x1b[31mdog", logger_spy_get_string());
 }
 /*
-when colour is toggled on DEBUG have no colour
+when colour is toggled on LOGGER_DEBUG have no colour
 */
-TEST(LoggerTest, colour_on_logs_are_coloured_debug)
+TEST(LoggerTest, colour_on_logs_are_not_coloured_LOGGER_DEBUG)
 {
    
     // Register a destination
     logger_set_global_timestamping(false);
     logger_set_global_verbosity_prepend(false);
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
     // toggle colout on 
     logger_set_dest_colour("jeff1", true);
     // Do a log
-    logger_log(DEBUG, "dog");
+    logger_log(LOGGER_DEBUG, "dog");
 
     // Check that the log has a colour appended to it
     STRCMP_EQUAL("\x1b[0mdog", logger_spy_get_string());
@@ -532,13 +532,13 @@ TEST(LoggerTest, colour_logs_can_be_toggled_per_dest)
     // Register a destination
     logger_set_global_timestamping(false);
     logger_set_global_verbosity_prepend(false);
-    logger_register_destination(logger_spy_write, DEBUG, true, "jeff1");
-    logger_register_destination(logger_spy_write2, DEBUG, true, "jeff2");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "jeff1");
+    logger_register_destination(logger_spy_write2, LOGGER_DEBUG, true, "jeff2");
     // toggle colout on 
     logger_set_dest_colour("jeff1", true);
     logger_set_dest_colour("jeff2", false);
     // Do a log
-    logger_log(DEBUG, "dog");
+    logger_log(LOGGER_DEBUG, "dog");
 
     // Check the true destination has colour in it 
     STRCMP_EQUAL("\x1b[0mdog", logger_spy_get_string());
@@ -554,11 +554,11 @@ TEST(LoggerTest, colour_logs_with_timestamp)
     logger_init(logger_spy_get_time);
     logger_set_global_verbosity_prepend(false);
 
-    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "yeeter");
 
     logger_set_dest_colour("yeeter", true);
 
-    logger_log(WARNING, "REE");
+    logger_log(LOGGER_WARNING, "REE");
 
     STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] REE", logger_spy_get_string());
 }
@@ -571,11 +571,11 @@ TEST(LoggerTest, colour_logs_with_verbosity)
     logger_init(NULL);
     logger_set_global_verbosity_prepend(true);
 
-    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "yeeter");
 
     logger_set_dest_colour("yeeter", true);
 
-    logger_log(WARNING, "REE");
+    logger_log(LOGGER_WARNING, "REE");
 
     STRCMP_EQUAL("\x1b[33m[W] REE", logger_spy_get_string());
 }
@@ -588,11 +588,11 @@ TEST(LoggerTest, colour_logs_with_verbosity_and_timestamp)
     logger_init(logger_spy_get_time);
     logger_set_global_verbosity_prepend(true);
 
-    logger_register_destination(logger_spy_write, DEBUG, true, "yeeter");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "yeeter");
 
     logger_set_dest_colour("yeeter", true);
 
-    logger_log(WARNING, "REE");
+    logger_log(LOGGER_WARNING, "REE");
 
     STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] [W] REE", logger_spy_get_string());
 }
@@ -604,9 +604,9 @@ TEST(LoggerTest, variadic_parameters_log_no_prepends)
 {
     logger_init(NULL);
     logger_set_global_verbosity_prepend(false);
-    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "vari");
 
-    logger_log(WARNING, "Test: %d\n", 3);
+    logger_log(LOGGER_WARNING, "Test: %d\n", 3);
 
     STRCMP_EQUAL("Test: 3\n", logger_spy_get_string());
 }
@@ -618,10 +618,10 @@ TEST(LoggerTest, variadic_parameters_log_colour)
 {
     logger_init(NULL);
     logger_set_global_verbosity_prepend(false);
-    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "vari");
     logger_set_dest_colour("vari", true);
 
-    logger_log(WARNING, "Test: %d\n", 3);
+    logger_log(LOGGER_WARNING, "Test: %d\n", 3);
 
     STRCMP_EQUAL("\x1b[33mTest: 3\n", logger_spy_get_string());
 }
@@ -633,10 +633,10 @@ TEST(LoggerTest, variadic_parameters_log_colour_and_verbosity)
 {
     logger_init(NULL);
     logger_set_global_verbosity_prepend(true);
-    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "vari");
     logger_set_dest_colour("vari", true);
 
-    logger_log(WARNING, "Test: %d\n", 3);
+    logger_log(LOGGER_WARNING, "Test: %d\n", 3);
 
     STRCMP_EQUAL("\x1b[33m[W] Test: 3\n", logger_spy_get_string());
 }
@@ -648,10 +648,10 @@ TEST(LoggerTest, variadic_parameters_log_colour_verbosity_and_time)
 {
     logger_init(logger_spy_get_time);
     logger_set_global_verbosity_prepend(true);
-    logger_register_destination(logger_spy_write, DEBUG, true, "vari");
+    logger_register_destination(logger_spy_write, LOGGER_DEBUG, true, "vari");
     logger_set_dest_colour("vari", true);
 
-    logger_log(WARNING, "Test: %d\n", 3);
+    logger_log(LOGGER_WARNING, "Test: %d\n", 3);
 
     STRCMP_EQUAL("\x1b[33m[1970-1-1T00:00:00] [W] Test: 3\n", logger_spy_get_string());
 }

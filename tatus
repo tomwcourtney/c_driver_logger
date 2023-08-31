@@ -1,0 +1,286 @@
+[33mcommit 151f4fcc4dba2f2ba37d1577bc6ff6e7d38e4b0e[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Tom Courtney <thomas.courtney@roboticsystems.com.au>
+Date:   Thu Aug 31 18:33:00 2023 +1000
+
+    split logger into inc and src folders.
+
+[33mcommit df51fd8003e6a357ccaf9f51f4e86354dcda2bff[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Thu Aug 24 14:56:08 2023 +1000
+
+    Changed the LOGGER_ERROR enum to LOGGER_ERR.
+
+[33mcommit 4ba5bc0b40d881132a8e52d8230d65d0556689fd[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Mon Aug 21 15:08:03 2023 +1000
+
+    Modified the logger enumerator type for error, info etc.
+
+[33mcommit eacf831ce7e69bba5df3b180c83fe2e8f93e8527[m
+Merge: cd70f98 33d7a05
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Mon Aug 21 06:53:33 2023 +1000
+
+    Merge branch 'develop' of https://github.com/tomwcourtney/c_driver_logger into develop
+
+[33mcommit cd70f982240d054d4053b93b4f5bbf1baa2181b8[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Mon Aug 21 06:53:29 2023 +1000
+
+    ignore gen docs
+
+[33mcommit 33d7a05c7c1b3b7aa8585f8bb54ea15f86d21386[m
+Merge: 8a1dddf 40f4a7a
+Author: Dean Mercer <dean.mercer@roboticsystems.com.au>
+Date:   Mon Aug 21 06:42:03 2023 +1000
+
+    Merge tag '1.0.0' into develop
+    
+    Version 1.0.0
+
+[33mcommit 40f4a7a5e8710afe239bc706a7e4192e96fa2b4d[m[33m ([m[1;33mtag: 1.0.0[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: efa2349 8a1dddf
+Author: Dean Mercer <dean.mercer@roboticsystems.com.au>
+Date:   Mon Aug 21 06:41:25 2023 +1000
+
+    Merge branch 'release/1.0.0'
+
+[33mcommit 8a1dddff332649ff24255222283e8a0730b5924a[m
+Author: Dean Mercer <dean.mercer@roboticsystems.com.au>
+Date:   Mon Aug 21 06:27:40 2023 +1000
+
+    make variadic parameters/format strings work with appropriate tests
+
+[33mcommit ce5639132f7d98804204490dd00bd0ef8e06b5f1[m
+Author: Dean Mercer <dean.mercer@roboticsystems.com.au>
+Date:   Fri Aug 18 07:02:15 2023 +1000
+
+    add tests for untested code paths (prepending colour when timestamps and/or verbosity is also prepended. fixed bug related to this (colour not prepending when timestamp is prepended
+
+[33mcommit 3316823e5f9d985b68c1fe16aa5a9ca69fbd8ee4[m
+Author: Dean Mercer <dean.mercer@roboticsystems.com.au>
+Date:   Thu Aug 17 07:27:38 2023 +1000
+
+    finish timestamping and colour
+
+[33mcommit 1317affadd579500dce34aeb7d7334c152ee6567[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Wed Aug 16 09:13:00 2023 +1000
+
+    started on the logger time and verbosity
+
+[33mcommit 80fbc87c9f2ec8e80410b7e8f1b73e3098496368[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Wed Aug 16 08:04:30 2023 +1000
+
+    added time into the logger spy
+
+[33mcommit 328789d3fcb0d9e6d52ac2b6c31546a910e4a719[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Wed Aug 16 06:44:08 2023 +1000
+
+    Co-authored-by: Thomas Courtney <tomwcourtney@users.noreply.github.com>
+    Co-authored-by: dean <voidape@users.noreply.github.com>
+
+[33mcommit f21570519d0f0f29dbd93b79cb1aab1e2af92cff[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Tue Aug 15 14:22:02 2023 +1000
+
+    deleting the yml file and fixing the breif
+
+[33mcommit 857a9cc707c891364db6586ef1970980688c9537[m
+Author: GitHub Actions <actions@github.com>
+Date:   Tue Aug 15 04:19:42 2023 +0000
+
+    Generated Doxygen docs
+
+[33mcommit d4928067b65c69cbcf2355e61ce0647bb42f94f4[m
+Merge: 7011b02 924dd2b
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Tue Aug 15 14:18:49 2023 +1000
+
+    Merge branch 'develop' of https://github.com/tomwcourtney/c_driver_logger into develop
+
+[33mcommit 7011b024bbfd3c313172b83284d26f56040b3f61[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Tue Aug 15 14:18:45 2023 +1000
+
+    changing breif
+
+[33mcommit 924dd2bda9da17407e05e800d82759c33ebeebb7[m
+Author: GitHub Actions <actions@github.com>
+Date:   Sun Aug 13 21:17:04 2023 +0000
+
+    Generated Doxygen docs
+
+[33mcommit 2ba2a0681cd18c56ee0c37948b72a3e439d33794[m
+Merge: ac531cb 1c917d6
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Mon Aug 14 07:15:23 2023 +1000
+
+    Merge branch 'develop' of https://github.com/tomwcourtney/c_driver_logger into develop
+
+[33mcommit ac531cb4cc29ed189c1bba9c0b25f272a48fd099[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Mon Aug 14 07:13:10 2023 +1000
+
+    Planned out some new test for the colour, time and verbosity logging and finished up the existing ones
+
+[33mcommit 16a9620f30db3e7d3b381c3ed2b6440c23126c10[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Mon Aug 14 07:13:04 2023 +1000
+
+    Co-authored-by: dean <voidape@users.noreply.github.com>
+
+[33mcommit 1c917d62c646194fe7e591bbf44b274b8faef6a1[m
+Author: GitHub Actions <actions@github.com>
+Date:   Sun Aug 13 21:11:18 2023 +0000
+
+    Generated Doxygen docs
+
+[33mcommit 9473224cc6d5f838f1b9555fcb59449ff7bab91d[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Mon Aug 14 07:10:57 2023 +1000
+
+    Changed the output directory of the doxy file
+
+[33mcommit a20315c566a16f2dcfc989c7fe37ade9f33e6a4f[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Mon Aug 14 06:44:29 2023 +1000
+
+    add yaml to develop branch
+
+[33mcommit 442c3df5b3ea23b1fa6689d70120c41ff112db5f[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Fri Aug 11 07:10:38 2023 +1000
+
+    Trying to make websight
+    Co-authored-by: dean <voidape@users.noreply.github.com>
+    Co-authored-by: Thomas Courtney <tomwcourtney@users.noreply.github.com>
+
+[33mcommit c50d8199a5cf3bdf36d81c6751ac3eda2a3c4ff4[m
+Merge: 4076ed6 e973db7
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Fri Aug 11 06:47:54 2023 +1000
+
+    Merge branch 'develop' of https://github.com/tomwcourtney/c_driver_logger into develop
+
+[33mcommit 4076ed6883e5c777783f6e40a32c34c44d50c61c[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Fri Aug 11 06:47:38 2023 +1000
+
+    Added github action to generate doxygen.
+
+[33mcommit e973db7f513185224c5b0179f2f56aabd419f784[m
+Merge: 1699568 7c77775
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Fri Aug 11 06:44:42 2023 +1000
+
+    Merge branch 'develop' of https://github.com/tomwcourtney/c_driver_logger into develop
+
+[33mcommit 16995683996c5415dc617e7400006c658137dc8b[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Fri Aug 11 06:44:30 2023 +1000
+
+    docs folder
+
+[33mcommit 7c77775f3c29b59e4a6d56a5db51f14dbe7f4754[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Fri Aug 11 06:39:01 2023 +1000
+
+    Git hook
+
+[33mcommit 304c3907ff3a791e6145ba4b7ead02fbaf369be6[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Fri Aug 11 06:29:31 2023 +1000
+
+    Added in the doxy documentation
+
+[33mcommit 6c21590d57ce321254a84f9b832b878094b37a24[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Thu Aug 10 14:32:51 2023 +1000
+
+    Finished the main logger tests, halfway though doxygen documentaiton
+    Co-authored-by: dean <voidape@users.noreply.github.com>
+    Co-authored-by: Thomas Courtney <tomwcourtney@users.noreply.github.com>
+
+[33mcommit 0d8301ef7acfdc071c7c24aa16d5506cae891c6a[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Wed Aug 9 09:23:05 2023 +1000
+
+    Disable destination of many
+
+[33mcommit 29055aeee98fe9870ddf78852c400d64e959f446[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Wed Aug 9 09:05:37 2023 +1000
+
+    Made it many.
+
+[33mcommit d12e9116a15193c833c3732469c98770deab2afc[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Wed Aug 9 06:22:02 2023 +1000
+
+    Co-authored-by: dean <voidape@users.noreply.github.com>
+    Co-authored-by: PatrickKingwill <PatrickKingwill@users.noreply.github.com>
+    
+    Added check if destination enable works.
+
+[33mcommit 3aa5904aae1e9f2e136268005102f70fa8333c4b[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Fri Aug 4 08:26:12 2023 +1000
+
+    disable destiantion test finished, also added the string.h libs to logger_test it was throwing an error for me
+
+[33mcommit 3ee30ba08bfa63a89d4254cd5da6266cacd32d1a[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Fri Aug 4 08:02:13 2023 +1000
+
+    writting the disable dest test
+
+[33mcommit 1d10f093aa0899398676e6ad68709578f99eb762[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Fri Aug 4 06:52:26 2023 +1000
+
+    Add test to check sending bytes to desintation works.
+
+[33mcommit e70834cbe9799dd6dbe220305de37b94e5400de5[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Wed Aug 2 09:59:23 2023 +1000
+
+    Spy test complete. Log test started.
+
+[33mcommit e5bc0b4a1b5863e60e5cd74b7dbd57d0d81de4b2[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Tue Aug 1 07:51:35 2023 +1000
+
+    Add test to check if buffer overflows
+
+[33mcommit 1e3e12c89c939ba234bade078cdaabdceff34875[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Tue Aug 1 07:24:57 2023 +1000
+
+    big string overwritten by little string works as expected
+
+[33mcommit 4064901a9be833192108e39e2fe2a4c89855080c[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Tue Aug 1 07:04:02 2023 +1000
+
+    Added zero test for logger spy.
+
+[33mcommit 7b7bf052dc1694dc8850aa84c099e9ad072e8634[m
+Author: LAPTOP\xolop <thomas.courtney@roboticsystems.com.au>
+Date:   Tue Aug 1 06:31:36 2023 +1000
+
+    Add workspace files to git ignore
+
+[33mcommit efa2349b5822ba53b9df4371b1e1193fcdaa302e[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Mon Jul 31 06:36:59 2023 +1000
+
+    Adding the logger code
+
+[33mcommit e563b5fbea4ece4de793cf6e7761429d099874ff[m
+Author: RS_Lappy\Pat <patrick.kingwill@roboticsystems.com.au>
+Date:   Mon Jul 31 06:35:43 2023 +1000
+
+    Added Test Harness
