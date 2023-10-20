@@ -1,1 +1,4 @@
 test-harness/tests/c_driver_logger.code-workspace
+*.code-workspace
+html
+latex

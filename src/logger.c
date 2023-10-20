@@ -55,7 +55,7 @@ const char * colours[] =
 
 logger_destination_t destinations[MAX_DESTINATIONS] = {0};
 
-logger_verbosity_t global_verbosity = OFF;
+logger_verbosity_t global_verbosity = LOGGER_OFF;
 bool global_timestamping = true;
 bool global_verbosity_prepend = true;
 
@@ -75,7 +75,7 @@ void logger_init(get_time_function fn_ptr)
 {
     // Set global verbosity to something other than off
     destinations_head = 0;
-    logger_set_global_verbosity(OFF);
+    logger_set_global_verbosity(LOGGER_OFF);
     get_time = fn_ptr;
     global_timestamping = true;
     return;
@@ -123,7 +123,7 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
     {
         if(destinations[i].enabled)
         {
-            if(global_verbosity == OFF)
+            if(global_verbosity == LOGGER_OFF)
             {
                 if (verbosity <= destinations[i].verbosity)
                 {
