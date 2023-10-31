@@ -83,18 +83,18 @@ void logger_init(get_time_function fn_ptr)
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
-    char formatted_message[MAX_LOG_SIZE+1] = {0};
-    char logged_message[MAX_LOG_SIZE+1] = {0};
-    char logged_message_colour[MAX_LOG_SIZE+1] = {0};
+    char formatted_message[LOGGER_MAX_LOG_SIZE+1] = {0};
+    char logged_message[LOGGER_MAX_LOG_SIZE+1] = {0};
+    char logged_message_colour[LOGGER_MAX_LOG_SIZE+1] = {0};
     
     // unpack args and build formatted string
     va_list args;
     va_start(args, message);
-    vsnprintf(formatted_message, MAX_LOG_SIZE, message, args);
+    vsnprintf(formatted_message, LOGGER_MAX_LOG_SIZE, message, args);
     va_end(args);
 
     // Add the colour
-    snprintf(logged_message_colour, MAX_LOG_SIZE, "%s", colours[verbosity]); 
+    snprintf(logged_message_colour, LOGGER_MAX_LOG_SIZE, "%s", colours[verbosity]); 
 
     // If the logger has a get time function
     if(get_time != NULL && global_timestamping)
@@ -102,9 +102,9 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
         char timestamp[TIMESTAMP_MAX_SIZE+1] = {0};
         char timestamp_brackets[TIMESTAMP_MAX_SIZE+1+3] = {0};
         get_time(timestamp);
-        snprintf(logged_message, MAX_LOG_SIZE, "[%s] ", timestamp);    
+        snprintf(logged_message, LOGGER_MAX_LOG_SIZE, "[%s] ", timestamp);    
         snprintf(timestamp_brackets, TIMESTAMP_MAX_SIZE+1+3, "[%s] ", timestamp);
-        strncat(logged_message_colour, timestamp_brackets, MAX_LOG_SIZE);
+        strncat(logged_message_colour, timestamp_brackets, LOGGER_MAX_LOG_SIZE);
     }
 
     // If the logger versobity tag is turned on
@@ -112,12 +112,12 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
     {
         char severity_tag[VERB_TAG_MAX_SIZE] = {0};
         snprintf(severity_tag, VERB_TAG_MAX_SIZE, "[%s] ", severity_tags[verbosity]);   
-        strncat(logged_message, severity_tag, MAX_LOG_SIZE);
-        strncat(logged_message_colour, severity_tag, MAX_LOG_SIZE);
+        strncat(logged_message, severity_tag, LOGGER_MAX_LOG_SIZE);
+        strncat(logged_message_colour, severity_tag, LOGGER_MAX_LOG_SIZE);
     }
 
-    strncat(logged_message, formatted_message, MAX_LOG_SIZE);
-    strncat(logged_message_colour, formatted_message, MAX_LOG_SIZE);
+    strncat(logged_message, formatted_message, LOGGER_MAX_LOG_SIZE);
+    strncat(logged_message_colour, formatted_message, LOGGER_MAX_LOG_SIZE);
 
     for(uint8_t i = 0; i < destinations_head; i++)
     {

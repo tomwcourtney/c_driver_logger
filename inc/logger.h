@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define MAX_LOG_SIZE 1024
+#define LOGGER_MAX_LOG_SIZE 2048
 
 /**
  * @brief Typedef'd enum representing verbosity levels, in increasing order of verbosity from least verbose (ERROR, only logs ERRORs) to most verbose (DEBUG, will log all). When a destination is configured with a certain verbosity,
