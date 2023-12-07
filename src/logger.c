@@ -25,8 +25,8 @@ typedef struct {
     write_function write;
     logger_verbosity_t verbosity;
     bool colour;
-} logger_destination_t;
 
+} logger_destination_t;
 
 
 // These tags correspond to the severity of a log. 
