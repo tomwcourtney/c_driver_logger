@@ -102,20 +102,28 @@ void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
         char timestamp[TIMESTAMP_MAX_SIZE+1] = {0};
         char timestamp_brackets[TIMESTAMP_MAX_SIZE+1+3] = {0};
         get_time(timestamp);
-        snprintf(logged_message, LOGGER_MAX_LOG_SIZE, "[%s] ", timestamp);    
+
+        // Create the formatted timestamp string
         snprintf(timestamp_brackets, TIMESTAMP_MAX_SIZE+1+3, "[%s] ", timestamp);
+
+        // Concatenate the formatted timestamp string to the color/uncolored strings
+        strncat(logged_message, timestamp_brackets, LOGGER_MAX_LOG_SIZE);
         strncat(logged_message_colour, timestamp_brackets, LOGGER_MAX_LOG_SIZE);
     }
 
     // If the logger versobity tag is turned on
     if(global_verbosity_prepend)
     {
+        // Create the verbosity string
         char severity_tag[VERB_TAG_MAX_SIZE] = {0};
         snprintf(severity_tag, VERB_TAG_MAX_SIZE, "[%s] ", severity_tags[verbosity]);   
+
+        // Concatenate the verbosity string to the colored/uncolored messages
         strncat(logged_message, severity_tag, LOGGER_MAX_LOG_SIZE);
         strncat(logged_message_colour, severity_tag, LOGGER_MAX_LOG_SIZE);
     }
 
+    // Concatenate the formatted message to the colored/uncolored strings.
     strncat(logged_message, formatted_message, LOGGER_MAX_LOG_SIZE);
     strncat(logged_message_colour, formatted_message, LOGGER_MAX_LOG_SIZE);
 
