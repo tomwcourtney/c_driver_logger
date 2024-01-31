@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define MAX_DESTINATIONS 2
+#define MAX_DESTINATIONS 3
 uint8_t destinations_head = 0;
 
 #define TIMESTAMP_MAX_SIZE 50
