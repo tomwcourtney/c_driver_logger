@@ -25,6 +25,8 @@ typedef enum{
     LOGGER_DEBUG,
 }logger_verbosity_t;
 
+extern const char * colours[8];
+
 /**
  * @brief Definition of our function pointer type for the write funtions.
 */

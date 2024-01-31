@@ -8,7 +8,7 @@ uint8_t destinations_head = 0;
 
 #define TIMESTAMP_MAX_SIZE 50
 #define ID_MAX_SIZE 50
-#define VERB_TAG_MAX_SIZE 5
+#define VERB_TAG_MAX_SIZE 10
 
 /** 
  * @brief Structure for a destination to send your logs to.
@@ -41,7 +41,7 @@ const char * severity_tags[] =
 };
 
 // These are the ansi codes for terminal colours
-const char * colours[] = 
+const char * colours[8] =
 {
     "off",      // Place holder for off    
     "\x1b[31m", // Red      - Error
