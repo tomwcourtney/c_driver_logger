@@ -83,9 +83,9 @@ void logger_init(get_time_function fn_ptr)
 
 void logger_log(logger_verbosity_t verbosity, const char *  message, ...)
 {
-    char formatted_message[LOGGER_MAX_LOG_SIZE+128] = {0};
-    char logged_message[LOGGER_MAX_LOG_SIZE+128] = {0};
-    char logged_message_colour[LOGGER_MAX_LOG_SIZE+128] = {0};
+    char formatted_message[LOGGER_MAX_LOG_SIZE+1] = {0};
+    char logged_message[LOGGER_MAX_LOG_SIZE+1] = {0};
+    char logged_message_colour[LOGGER_MAX_LOG_SIZE+1] = {0};
     
     // unpack args and build formatted string
     va_list args;

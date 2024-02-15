@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define LOGGER_MAX_LOG_SIZE 256
+#define LOGGER_MAX_LOG_SIZE (256+128)
 
 /**
  * @brief Typedef'd enum representing verbosity levels, in increasing order of verbosity from least verbose (ERROR, only logs ERRORs) to most verbose (DEBUG, will log all). When a destination is configured with a certain verbosity,
@@ -30,7 +30,7 @@ extern const char * colours[8];
 /**
  * @brief Definition of our function pointer type for the write funtions.
 */
-typedef void (*write_function)(const char *);
+typedef int (*write_function)(const char *);
 
 /**
  * @brief Writes a timestamp over the char array passed in as parameter.
